@@ -4,6 +4,8 @@ import android.content.Context;
 
 import javax.net.ssl.SSLContext;
 
+import okhttp3.OkHttpClient;
+
 /**
  * Copyright (C), 2015-2020
  * FileName: CommonOkBuilder
@@ -16,6 +18,16 @@ public class CommonOkBuilder {
     private Context context;
     private String mBaseUrl;
     private SSLContext sslContext;
+    private OkHttpClient mClient;
+
+    public OkHttpClient getClient() {
+        return mClient;
+    }
+
+    public CommonOkBuilder setClient(OkHttpClient mClient) {
+        this.mClient = mClient;
+        return this;
+    }
 
     public SSLContext getSslContext() {
         return sslContext;
