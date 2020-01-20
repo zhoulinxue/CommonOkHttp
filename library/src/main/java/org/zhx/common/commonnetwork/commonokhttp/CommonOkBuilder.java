@@ -12,7 +12,7 @@ import javax.net.ssl.SSLContext;
  * Description:
  */
 public class CommonOkBuilder {
-    private HeadInterceptor interceptor;
+    private HeaderInterceptor interceptor;
     private Context context;
     private String mBaseUrl;
     private SSLContext sslContext;
@@ -51,11 +51,11 @@ public class CommonOkBuilder {
         return this;
     }
 
-    public HeadInterceptor getInterceptor() {
+    public HeaderInterceptor getInterceptor() {
         return interceptor;
     }
 
-    public CommonOkBuilder setInterceptor(HeadInterceptor interceptor) {
+    public CommonOkBuilder setInterceptor(HeaderInterceptor interceptor) {
         this.interceptor = interceptor;
         return this;
     }
