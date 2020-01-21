@@ -14,5 +14,5 @@ import retrofit2.http.POST;
  */
 public interface weatherApi {
     @GET("http://t.weather.sojson.com/api/weather/city/101030100")
-    public Observable<String> getTest();
+    public Observable<WeatherInfo> getTest();
 }
