@@ -19,6 +19,8 @@ import okhttp3.Cookie;
 import okhttp3.CookieJar;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
+import retrofit2.CallAdapter;
+import retrofit2.Converter;
 
 /**
  * Copyright (C), 2015-2020
@@ -40,6 +42,18 @@ public class OkConfigBuilder {
     private int readTimeout = DEFAULT_TIME;
     private HostnameVerifier hostnameVerifier;
     private CookieJar cookieJar;
+    private Converter.Factory converterFactory;
+    private CallAdapter.Factory callFactory;
+
+    public OkConfigBuilder setCallFactory(CallAdapter.Factory callFactory) {
+        this.callFactory = callFactory;
+        return this;
+    }
+
+    public OkConfigBuilder setConverterFactory(Converter.Factory converterFactory) {
+        this.converterFactory = converterFactory;
+        return this;
+    }
 
     public OkConfigBuilder setClient(OkHttpClient mClient) {
         this.mClient = mClient;
@@ -179,6 +193,9 @@ public class OkConfigBuilder {
         config.setConnectTimeout(connectTimeout);
         config.setReadTimeout(readTimeout);
         config.setWriteTimeout(writeTimeout);
+
+        config.setCallFactory(callFactory);
+        config.setConverterFactory(converterFactory);
 
         return config;
     }

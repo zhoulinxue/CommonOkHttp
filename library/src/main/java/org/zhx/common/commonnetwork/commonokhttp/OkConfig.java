@@ -8,6 +8,8 @@ import javax.net.ssl.X509TrustManager;
 
 import okhttp3.CookieJar;
 import okhttp3.OkHttpClient;
+import retrofit2.CallAdapter;
+import retrofit2.Converter;
 
 /**
  * Copyright (C), 2015-2020
@@ -29,6 +31,24 @@ public class OkConfig {
     private int readTimeout = DEFAULT_TIME;
     private HostnameVerifier hostnameVerifier;
     private CookieJar cookieJar;
+    private Converter.Factory converterFactory;
+    private CallAdapter.Factory callFactory;
+
+    public CallAdapter.Factory getCallFactory() {
+        return callFactory;
+    }
+
+    public void setCallFactory(CallAdapter.Factory callFactory) {
+        this.callFactory = callFactory;
+    }
+
+    public void setConverterFactory(Converter.Factory converterFactory) {
+        this.converterFactory = converterFactory;
+    }
+
+    public Converter.Factory getConverterFactory() {
+        return converterFactory;
+    }
 
     public HeaderInterceptor getInterceptor() {
         return interceptor;

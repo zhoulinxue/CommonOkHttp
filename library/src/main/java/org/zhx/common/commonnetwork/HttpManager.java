@@ -57,6 +57,12 @@ public class HttpManager {
             mClient = builder.getClient() == null ? buildClient(builder) : builder.getClient();
             defaultBuilder = creatNewBuilder(mClient);
             defaultBuilder.baseUrl(builder.getBaseUrl());
+            if (builder.getCallFactory() != null) {
+                defaultBuilder.addCallAdapterFactory(builder.getCallFactory());
+            }
+            if (builder.getConverterFactory() != null) {
+                defaultBuilder.addConverterFactory(builder.getConverterFactory());
+            }
         } else {
             Log.e(TAG, "HttpManger init  failed  commonOkBuilder can  not  be  null.....");
         }
