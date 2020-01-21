@@ -120,6 +120,10 @@ public class HttpManager {
         return null;
     }
 
+    public OkConfig getOkConfig() {
+        return okConfig;
+    }
+
     public OkHttpClient getDefaultClient() {
         return mClient;
     }
