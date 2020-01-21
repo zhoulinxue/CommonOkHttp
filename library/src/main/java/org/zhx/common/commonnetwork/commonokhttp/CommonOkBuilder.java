@@ -118,10 +118,12 @@ public class CommonOkBuilder {
     public CommonOkBuilder(Context context) {
         this.context = context;
     }
+
     public CommonOkBuilder setBaseUrl(String mBaseUrl) {
         this.mBaseUrl = mBaseUrl;
         return this;
     }
+
     public CommonOkBuilder setContext(Context context) {
         this.context = context;
         return this;
@@ -131,14 +133,17 @@ public class CommonOkBuilder {
         this.interceptor = interceptor;
         return this;
     }
+
     public CommonOkBuilder setWriteTimeout(int writeTimeout) {
         this.writeTimeout = writeTimeout;
         return this;
     }
+
     public CommonOkBuilder setReadTimeout(int readTimeout) {
         this.readTimeout = readTimeout;
         return this;
     }
+
     public CommonOkBuilder setConnectTimeout(int connectTimeout) {
         this.connectTimeout = connectTimeout;
         return this;
@@ -148,16 +153,19 @@ public class CommonOkBuilder {
         this.x509TrustManager = x509TrustManager;
         return this;
     }
+
     public CommonOkBuilder setHostnameVerifier(HostnameVerifier hostnameVerifier) {
         this.hostnameVerifier = hostnameVerifier;
         return this;
     }
+
     public CommonOkBuilder setCookieJar(CookieJar cookieJar) {
         this.cookieJar = cookieJar;
         return this;
     }
-    public OkConfig build(){
-        OkConfig config=new OkConfig();
+
+    public OkConfig build() {
+        OkConfig config = new OkConfig();
         config.setBaseUrl(mBaseUrl);
         config.setContext(context);
         config.setClient(mClient);
@@ -171,9 +179,6 @@ public class CommonOkBuilder {
         config.setConnectTimeout(connectTimeout);
         config.setReadTimeout(readTimeout);
         config.setWriteTimeout(writeTimeout);
-
-
-
 
         return config;
     }
