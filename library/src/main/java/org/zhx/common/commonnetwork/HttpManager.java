@@ -1,5 +1,6 @@
 package org.zhx.common.commonnetwork;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import org.zhx.common.commonnetwork.commonokhttp.OkConfig;
@@ -56,7 +57,12 @@ public class HttpManager {
         if (builder != null) {
             mClient = builder.getClient() == null ? buildClient(builder) : builder.getClient();
             defaultBuilder = creatNewBuilder(mClient);
-            defaultBuilder.baseUrl(builder.getBaseUrl());
+            if (!TextUtils.isEmpty(builder.getBaseUrl())) {
+                defaultBuilder.baseUrl(builder.getBaseUrl());
+            } else {
+                defaultBuilder.baseUrl("https://www.baidu.com");
+            }
+
             if (builder.getCallFactory() != null) {
                 defaultBuilder.addCallAdapterFactory(builder.getCallFactory());
             }
@@ -88,20 +94,18 @@ public class HttpManager {
             }
         });
         logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder()
+        OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 .addInterceptor(logInterceptor)
                 .connectTimeout(config.getConnectTimeout(), TimeUnit.SECONDS)
                 .writeTimeout(config.getWriteTimeout(), TimeUnit.SECONDS)
                 .readTimeout(config.getReadTimeout(), TimeUnit.SECONDS)
-                .sslSocketFactory(config.getSslContext().getSocketFactory(), config.getX509TrustManager())
-                .hostnameVerifier(config.getHostnameVerifier())
                 .cookieJar(config.getCookieJar())
                 .addInterceptor(new Interceptor() {
                     @Override
                     public Response intercept(Chain chain) throws IOException {
                         Request.Builder requstBuilder = chain.request().newBuilder();
                         Request request = requstBuilder.build();
-                        if(config.getInterceptor()==null){
+                        if (config.getInterceptor() == null) {
                             return chain.proceed(request);
                         }
                         Map<String, String> map = config.getInterceptor().creatHeader();
@@ -111,8 +115,12 @@ public class HttpManager {
                             }
                         return chain.proceed(request);
                     }
-                })
-                .build();
+                });
+        if (config.isHttps()) {
+            builder.sslSocketFactory(config.getSslContext().getSocketFactory(), config.getX509TrustManager())
+                    .hostnameVerifier(config.getHostnameVerifier());
+        }
+        OkHttpClient client = builder.build();
         return client;
     }
 

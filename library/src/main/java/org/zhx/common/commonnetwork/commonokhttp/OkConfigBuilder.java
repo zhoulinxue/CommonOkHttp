@@ -44,6 +44,7 @@ public class OkConfigBuilder {
     private CookieJar cookieJar;
     private Converter.Factory converterFactory;
     private CallAdapter.Factory callFactory;
+    private boolean isHttps = false;
 
     public OkConfigBuilder setCallFactory(CallAdapter.Factory callFactory) {
         this.callFactory = callFactory;
@@ -178,6 +179,11 @@ public class OkConfigBuilder {
         return this;
     }
 
+    public OkConfigBuilder setHttps(boolean https) {
+        isHttps = https;
+        return this;
+    }
+
     public OkConfig build() {
         OkConfig config = new OkConfig();
         config.setBaseUrl(mBaseUrl);
@@ -189,6 +195,7 @@ public class OkConfigBuilder {
         config.setHostnameVerifier(hostnameVerifier);
         config.setSslContext(sslContext);
         config.setX509TrustManager(x509TrustManager);
+        config.setHttps(isHttps);
 
         config.setConnectTimeout(connectTimeout);
         config.setReadTimeout(readTimeout);

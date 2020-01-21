@@ -33,6 +33,7 @@ public class OkConfig {
     private CookieJar cookieJar;
     private Converter.Factory converterFactory;
     private CallAdapter.Factory callFactory;
+    private boolean isHttps = false;
 
     public CallAdapter.Factory getCallFactory() {
         return callFactory;
@@ -136,5 +137,13 @@ public class OkConfig {
 
     public void setCookieJar(CookieJar cookieJar) {
         this.cookieJar = cookieJar;
+    }
+
+    public void setHttps(boolean https) {
+        isHttps = https;
+    }
+
+    public boolean isHttps() {
+        return isHttps;
     }
 }

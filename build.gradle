@@ -28,8 +28,8 @@ task clean(type: Delete) {
 
 ext {
     android = [
-            compileSdkVersion: 28,
-            targetSdkVersion : 28,
+            compileSdkVersion: 27,
+            targetSdkVersion : 27,
             minSdkVersion    : 19
     ]
     appCompat = 'androidx.appcompat:appcompat:1.0.0'
