@@ -2,6 +2,7 @@ package org.zhx.common.commonnetwork.commonokhttp;
 
 import android.content.Context;
 
+import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.List;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 import okhttp3.Cookie;
@@ -39,17 +41,9 @@ public class CommonOkBuilder {
     private HostnameVerifier hostnameVerifier;
     private CookieJar cookieJar;
 
-    public OkHttpClient getClient() {
-        return mClient;
-    }
-
     public CommonOkBuilder setClient(OkHttpClient mClient) {
         this.mClient = mClient;
         return this;
-    }
-
-    public SSLContext getSslContext() {
-        return sslContext;
     }
 
     public CommonOkBuilder setSslContext(SSLContext sslContext) {
@@ -61,6 +55,16 @@ public class CommonOkBuilder {
         x509TrustManager = x509();
         hostnameVerifier = hostVerifier();
         cookieJar = cookiejar();
+        sslContext();
+    }
+
+    private void sslContext() {
+        try {
+            sslContext = SSLContext.getInstance("SSL");
+            sslContext.init(null, new TrustManager[]{x509TrustManager},
+                    new SecureRandom());
+        } catch (Exception e) {
+        }
     }
 
     private CookieJar cookiejar() {
@@ -114,85 +118,63 @@ public class CommonOkBuilder {
     public CommonOkBuilder(Context context) {
         this.context = context;
     }
-
-    public String getBaseUrl() {
-        return mBaseUrl;
-    }
-
     public CommonOkBuilder setBaseUrl(String mBaseUrl) {
         this.mBaseUrl = mBaseUrl;
         return this;
     }
-
-    public Context getContext() {
-        return context;
-    }
-
     public CommonOkBuilder setContext(Context context) {
         this.context = context;
         return this;
-    }
-
-    public HeaderInterceptor getInterceptor() {
-        return interceptor;
     }
 
     public CommonOkBuilder setInterceptor(HeaderInterceptor interceptor) {
         this.interceptor = interceptor;
         return this;
     }
-
-    public int getWriteTimeout() {
-        return writeTimeout;
-    }
-
     public CommonOkBuilder setWriteTimeout(int writeTimeout) {
         this.writeTimeout = writeTimeout;
         return this;
     }
-
-    public int getReadTimeout() {
-        return readTimeout;
-    }
-
     public CommonOkBuilder setReadTimeout(int readTimeout) {
         this.readTimeout = readTimeout;
         return this;
     }
-
-    public int getConnectTimeout() {
-        return connectTimeout;
-    }
-
     public CommonOkBuilder setConnectTimeout(int connectTimeout) {
         this.connectTimeout = connectTimeout;
         return this;
-    }
-
-    public X509TrustManager getX509TrustManager() {
-        return x509TrustManager;
     }
 
     public CommonOkBuilder setX509TrustManager(X509TrustManager x509TrustManager) {
         this.x509TrustManager = x509TrustManager;
         return this;
     }
-
-    public HostnameVerifier getHostnameVerifier() {
-        return hostnameVerifier;
-    }
-
     public CommonOkBuilder setHostnameVerifier(HostnameVerifier hostnameVerifier) {
         this.hostnameVerifier = hostnameVerifier;
         return this;
     }
-
-    public CookieJar getCookieJar() {
-        return cookieJar;
-    }
-
     public CommonOkBuilder setCookieJar(CookieJar cookieJar) {
         this.cookieJar = cookieJar;
         return this;
+    }
+    public OkConfig build(){
+        OkConfig config=new OkConfig();
+        config.setBaseUrl(mBaseUrl);
+        config.setContext(context);
+        config.setClient(mClient);
+
+        config.setCookieJar(cookieJar);
+        config.setInterceptor(interceptor);
+        config.setHostnameVerifier(hostnameVerifier);
+        config.setSslContext(sslContext);
+        config.setX509TrustManager(x509TrustManager);
+
+        config.setConnectTimeout(connectTimeout);
+        config.setReadTimeout(readTimeout);
+        config.setWriteTimeout(writeTimeout);
+
+
+
+
+        return config;
     }
 }

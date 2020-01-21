@@ -3,8 +3,10 @@ package org.zhx.common.commonnetwork;
 import android.util.Log;
 
 import org.zhx.common.commonnetwork.commonokhttp.CommonOkBuilder;
+import org.zhx.common.commonnetwork.commonokhttp.OkConfig;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -27,9 +29,10 @@ import okhttp3.logging.HttpLoggingInterceptor;
 public class HttpManager {
     private String TAG = HttpManager.class.getSimpleName();
     private static HttpManager manager;
-    private CommonOkBuilder builder;
+    private OkConfig okConfig;
     private Retrofit.Builder defaultBuilder;
     private OkHttpClient mClient;
+    private Map<String, Object> okhttpModel = new HashMap<>();
 
     public static HttpManager getInstance() {
         if (manager == null) {
@@ -49,8 +52,8 @@ public class HttpManager {
      *
      * @param builder
      */
-    public void init(CommonOkBuilder builder) {
-        this.builder = builder;
+    public void init(OkConfig builder) {
+        this.okConfig = builder;
         if (builder != null) {
             mClient = builder.getClient() == null ? buildClient(builder) : builder.getClient();
             defaultBuilder = creatNewBuilder(mClient);
@@ -72,7 +75,7 @@ public class HttpManager {
         return defaultBuilder;
     }
 
-    private OkHttpClient buildClient(final CommonOkBuilder builder) {
+    private OkHttpClient buildClient(final OkConfig config) {
         HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
             public void log(String message) {
@@ -82,16 +85,16 @@ public class HttpManager {
         logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(logInterceptor)
-                .connectTimeout(builder.getConnectTimeout(), TimeUnit.SECONDS)
-                .writeTimeout(builder.getWriteTimeout(), TimeUnit.SECONDS)
-                .readTimeout(builder.getReadTimeout(), TimeUnit.SECONDS)
-                .sslSocketFactory(builder.getSslContext().getSocketFactory(), builder.getX509TrustManager())
-                .hostnameVerifier(builder.getHostnameVerifier())
-                .cookieJar(builder.getCookieJar())
+                .connectTimeout(config.getConnectTimeout(), TimeUnit.SECONDS)
+                .writeTimeout(config.getWriteTimeout(), TimeUnit.SECONDS)
+                .readTimeout(config.getReadTimeout(), TimeUnit.SECONDS)
+                .sslSocketFactory(config.getSslContext().getSocketFactory(), config.getX509TrustManager())
+                .hostnameVerifier(config.getHostnameVerifier())
+                .cookieJar(config.getCookieJar())
                 .addInterceptor(new Interceptor() {
                     @Override
                     public Response intercept(Chain chain) throws IOException {
-                        Map<String, String> map = builder.getInterceptor().initHeader();
+                        Map<String, String> map = config.getInterceptor().initHeader();
                         Request.Builder requstBuilder = chain.request().newBuilder();
                         if (map != null)
                             for (String key : map.keySet()) {
@@ -103,6 +106,19 @@ public class HttpManager {
                 })
                 .build();
         return client;
+    }
+
+    public <T> T with(Class<T> service) {
+        if (service != null) {
+            Object object = okhttpModel.get(service.getSimpleName());
+            if (object == null) {
+                Log.e(TAG, "creat  new Model" + service.getSimpleName());
+                object = defaultBuilder.build().create(service);
+                okhttpModel.put(service.getSimpleName(), object);
+            }
+            return (T) object;
+        }
+        return null;
     }
 
     public OkHttpClient getDefaultClient() {
