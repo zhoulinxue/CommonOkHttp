@@ -1,9 +1,5 @@
 package org.zhx.common.commonnetwork.commonokhttp;
-
-import java.io.IOException;
-
-import okhttp3.Interceptor;
-import okhttp3.Response;
+import java.util.Map;
 
 /**
  * Copyright (C), 2015-2020
@@ -13,5 +9,5 @@ import okhttp3.Response;
  * Description:
  */
 public interface HeaderInterceptor {
-    public Response onIntercepter(Interceptor.Chain chain) throws IOException;
+    public Map<String,String> initHeader();
 }
