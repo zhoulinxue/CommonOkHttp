@@ -67,13 +67,13 @@ public class WeatherInfo {
 
     @Override
     public String toString() {
-        return "WeatherInfo{" +
+        return "WeatherInfo{\n" +
                 "message='" + message + '\'' +
-                ", status=" + status +
-                ", date='" + date + '\'' +
-                ", time='" + time + '\'' +
-                ", cityInfo=" + cityInfo +
-                ", data=" + data +
-                '}';
+                ", \nstatus=" + status +
+                ", \ndate='" + date + '\'' +
+                ", \ntime='" + time + '\'' +
+                ", \ncityInfo=" + cityInfo +
+                ", \ndata=" + data +
+                '}'+"\n";
     }
 }

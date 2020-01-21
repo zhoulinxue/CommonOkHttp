@@ -67,13 +67,13 @@ public class Extras {
 
     @Override
     public String toString() {
-        return "Extras{" +
+        return "Extras{\n" +
                 "shidu='" + shidu + '\'' +
-                ", pm25='" + pm25 + '\'' +
-                ", quality='" + quality + '\'' +
-                ", wendu='" + wendu + '\'' +
-                ", ganmao='" + ganmao + '\'' +
-                ", forecast=" + forecast +
-                '}';
+                ", \npm25='" + pm25 + '\'' +
+                ", \nquality='" + quality + '\'' +
+                ", \nwendu='" + wendu + '\'' +
+                ", \nganmao='" + ganmao + '\'' +
+                ", \nforecast=" + forecast +
+                '}'+"\n";
     }
 }

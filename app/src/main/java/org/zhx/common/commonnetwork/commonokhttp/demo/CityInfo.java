@@ -38,10 +38,10 @@ public class CityInfo {
 
     @Override
     public String toString() {
-        return "CityInfo{" +
+        return "CityInfo{\n" +
                 "city='" + city + '\'' +
-                ", citykey='" + citykey + '\'' +
-                ", parent='" + parent + '\'' +
-                '}';
+                ", \ncitykey='" + citykey + '\'' +
+                ", \nparent='" + parent + '\'' +
+                '}'+"\n";
     }
 }

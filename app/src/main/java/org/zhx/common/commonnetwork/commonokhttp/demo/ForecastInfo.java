@@ -119,19 +119,19 @@ public class ForecastInfo {
 
     @Override
     public String toString() {
-        return "ForecastInfo{" +
+        return "ForecastInfo{\n" +
                 "notice='" + notice + '\'' +
-                ", type='" + type + '\'' +
-                ", fl='" + fl + '\'' +
-                ", fx='" + fx + '\'' +
-                ", aqi='" + aqi + '\'' +
-                ", sunset='" + sunset + '\'' +
-                ", sunrise='" + sunrise + '\'' +
-                ", week='" + week + '\'' +
-                ", ymd='" + ymd + '\'' +
-                ", low='" + low + '\'' +
-                ", high='" + high + '\'' +
-                ", date='" + date + '\'' +
-                '}';
+                ", \ntype='" + type + '\'' +
+                ", \nfl='" + fl + '\'' +
+                ", \nfx='" + fx + '\'' +
+                ", \naqi='" + aqi + '\'' +
+                ", \nsunset='" + sunset + '\'' +
+                ", \nsunrise='" + sunrise + '\'' +
+                ", \nweek='" + week + '\'' +
+                ", \nymd='" + ymd + '\'' +
+                ", \nlow='" + low + '\'' +
+                ", \nhigh='" + high + '\'' +
+                ", \ndate='" + date + '\'' +
+                '}'+"\n";
     }
 }
