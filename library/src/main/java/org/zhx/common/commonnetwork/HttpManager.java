@@ -2,7 +2,6 @@ package org.zhx.common.commonnetwork;
 
 import android.util.Log;
 
-import org.zhx.common.commonnetwork.commonokhttp.CommonOkBuilder;
 import org.zhx.common.commonnetwork.commonokhttp.OkConfig;
 
 import java.io.IOException;
