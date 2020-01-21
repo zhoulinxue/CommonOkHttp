@@ -93,7 +93,7 @@ public class HttpManager {
                 .addInterceptor(new Interceptor() {
                     @Override
                     public Response intercept(Chain chain) throws IOException {
-                        Map<String, String> map = config.getInterceptor().initHeader();
+                        Map<String, String> map = config.getInterceptor().creatHeader();
                         Request.Builder requstBuilder = chain.request().newBuilder();
                         if (map != null)
                             for (String key : map.keySet()) {

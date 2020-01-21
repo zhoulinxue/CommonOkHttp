@@ -9,5 +9,5 @@ import java.util.Map;
  * Description:
  */
 public interface HeaderInterceptor {
-    public Map<String,String> initHeader();
+    public Map<String,String> creatHeader();
 }
