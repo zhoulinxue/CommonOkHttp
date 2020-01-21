@@ -51,7 +51,7 @@ public class HttpManager {
      *
      * @param builder
      */
-    public void init(OkConfig builder) {
+    public void creatClientFromCofig(OkConfig builder) {
         this.okConfig = builder;
         if (builder != null) {
             mClient = builder.getClient() == null ? buildClient(builder) : builder.getClient();
@@ -64,7 +64,7 @@ public class HttpManager {
                 defaultBuilder.addConverterFactory(builder.getConverterFactory());
             }
         } else {
-            Log.e(TAG, "HttpManger init  failed...(commonOkBuilder can  not  be  null)");
+            Log.e(TAG, "HttpManger creatClientFromCofig  failed...(commonOkBuilder can  not  be  null)");
         }
     }
 
@@ -99,13 +99,16 @@ public class HttpManager {
                 .addInterceptor(new Interceptor() {
                     @Override
                     public Response intercept(Chain chain) throws IOException {
-                        Map<String, String> map = config.getInterceptor().creatHeader();
                         Request.Builder requstBuilder = chain.request().newBuilder();
+                        Request request = requstBuilder.build();
+                        if(config.getInterceptor()==null){
+                            return chain.proceed(request);
+                        }
+                        Map<String, String> map = config.getInterceptor().creatHeader();
                         if (map != null)
                             for (String key : map.keySet()) {
                                 requstBuilder.addHeader(key, map.get(key));
                             }
-                        Request request = requstBuilder.build();
                         return chain.proceed(request);
                     }
                 })

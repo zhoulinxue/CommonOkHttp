@@ -17,7 +17,5 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        OkConfig config = new OkConfigBuilder(this).build();
-        HttpManager.getInstance().init(config);
     }
 }
