@@ -64,7 +64,7 @@ public class HttpManager {
                 defaultBuilder.addConverterFactory(builder.getConverterFactory());
             }
         } else {
-            Log.e(TAG, "HttpManger init  failed  commonOkBuilder can  not  be  null.....");
+            Log.e(TAG, "HttpManger init  failed...(commonOkBuilder can  not  be  null)");
         }
     }
 
