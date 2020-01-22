@@ -19,7 +19,7 @@ public abstract class BasePresenter<V extends BaseMvpView> {
     protected int mTotalNum;
     protected int mTotalPage = 0;
     protected boolean hasMore;
-    private HttpManager manager;
+    protected HttpManager manager;
     private boolean isNewBuilder = false;
     private OkHttpFactory factory;
 

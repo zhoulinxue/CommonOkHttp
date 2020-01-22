@@ -10,16 +10,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Copyright (C), 2015-2020
- * FileName: MvpActivity
+ * FileName: BaseActivity
  * Author: zx
  * Date: 2020/1/22 10:34
  * Description:
  */
-public abstract class MvpActivity extends AppCompatActivity implements BaseMvpView {
+public abstract class BaseActivity extends AppCompatActivity implements BaseMvpView {
     private DialogApi mLoading;
 
     @Override
-    protected final void onCreate(@Nullable Bundle savedInstanceState) {
+    protected  void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mLoading = creatLoadingDialog();
         int layout = initLayout();
@@ -77,7 +77,7 @@ public abstract class MvpActivity extends AppCompatActivity implements BaseMvpVi
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(MvpActivity.this, msg, Toast.LENGTH_SHORT).show();
+                Toast.makeText(BaseActivity.this, msg, Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -1,4 +1,4 @@
-package org.zhx.common.commonnetwork.commonokhttp.demo;
+package org.zhx.common.commonnetwork.commonokhttp.demo.mvp;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -7,6 +7,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
+import org.zhx.common.commonnetwork.commonokhttp.demo.R;
 import org.zhx.common.mvp.DialogApi;
 
 

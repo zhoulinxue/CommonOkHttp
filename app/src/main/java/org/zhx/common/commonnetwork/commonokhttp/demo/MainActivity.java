@@ -4,17 +4,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import org.zhx.common.commonnetwork.HttpManager;
-import org.zhx.common.commonnetwork.commonokhttp.OkConfig;
-import org.zhx.common.commonnetwork.commonokhttp.OkConfigBuilder;
+import org.zhx.common.commonnetwork.commonokhttp.demo.mvp.MvpActivity;
+import org.zhx.common.commonnetwork.commonokhttp.demo.mvp.presenters.WeatherPresenter;
+import org.zhx.common.commonnetwork.commonokhttp.demo.mvp.views.WeatherApi;
 
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
-
-public class MainActivity extends BaseActivity {
+public class MainActivity extends MvpActivity<WeatherPresenter> implements WeatherApi.view {
     private TextView textView;
+
+    @Override
+    protected WeatherPresenter initPresenter() {
+        return new WeatherPresenter(this);
+    }
 
     @Override
     protected int initLayout() {
@@ -24,9 +24,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onLoadIntentData(Intent intent) {
         //TODO  获取传递过来的参数
-        OkConfig config = new OkConfigBuilder()
-                .build();
-        HttpManager.getInstance().init(config);
+
     }
 
     @Override
@@ -42,29 +40,11 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onLoadDataFormNetWork() {
-        //TODO  调用接口
-        showLoadingDialog(R.string.loading_default_text);
-        HttpManager.getInstance().with(weatherApi.class).getTest().subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<WeatherInfo>() {
-            @Override
-            public void onSubscribe(Disposable d) {
+        mPresenter.getWeatherInfo();
+    }
 
-            }
-
-            @Override
-            public void onNext(WeatherInfo info) {
-                textView.setText(info.toString());
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onComplete() {
-                dismissLoadingDialog();
-            }
-        });
+    @Override
+    public void onWeatherInfo(WeatherInfo info) {
+        textView.setText(info.toString());
     }
 }
