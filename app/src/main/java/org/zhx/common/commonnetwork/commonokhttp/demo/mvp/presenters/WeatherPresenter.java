@@ -3,6 +3,7 @@ package org.zhx.common.commonnetwork.commonokhttp.demo.mvp.presenters;
 import org.zhx.common.commonnetwork.commonokhttp.demo.WeatherInfo;
 import org.zhx.common.commonnetwork.commonokhttp.demo.mvp.views.WeatherApi;
 import org.zhx.common.mvp.BasePresenter;
+import org.zhx.common.mvp.ObjectNetRequstAdapter;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -23,26 +24,11 @@ public class WeatherPresenter extends BasePresenter<WeatherApi.view> implements 
 
     @Override
     public void getWeatherInfo() {
-        manager.with(WeatherApi.class).getTest().subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<WeatherInfo>() {
-            @Override
-            public void onSubscribe(Disposable d) {
-
-            }
+        manager.with(WeatherApi.class).getTest().addRequest(mRequests).excute(new ObjectNetRequstAdapter<WeatherInfo>(mView) {
 
             @Override
-            public void onNext(WeatherInfo info) {
+            protected void onResultData(WeatherInfo info) {
                 mView.onWeatherInfo(info);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onComplete() {
-                mView.dismissLoadingDialog();
             }
         });
     }

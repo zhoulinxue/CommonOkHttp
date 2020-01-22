@@ -113,7 +113,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseMvpV
     }
 
     @Override
-    public void onError(int code, String msg) {
+    public void onError(String code, String msg) {
         showToast(msg);
     }
 

@@ -4,6 +4,11 @@ import org.zhx.common.commonnetwork.HttpManager;
 import org.zhx.common.commonnetwork.OkHttpFactory;
 import org.zhx.common.commonnetwork.commonokhttp.OkConfig;
 import org.zhx.common.commonnetwork.commonokhttp.OkConfigBuilder;
+import org.zhx.common.commonnetwork.commonokhttp.customObservable.CommonCallAdapterFactory;
+import org.zhx.common.commonnetwork.commonokhttp.customObservable.api.CommonNetRequest;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Copyright (C), 2015-2020
@@ -22,6 +27,7 @@ public abstract class BasePresenter<V extends BaseMvpView> {
     protected HttpManager manager;
     private boolean isNewBuilder = false;
     private OkHttpFactory factory;
+    protected List<CommonNetRequest> mRequests = new ArrayList<>();
 
     public boolean isNewBuilder() {
         return isNewBuilder;
@@ -55,6 +61,7 @@ public abstract class BasePresenter<V extends BaseMvpView> {
      */
     protected OkConfig onCreatHttpCofig() {
         OkConfig config = new OkConfigBuilder()
+                .setCallFactory(CommonCallAdapterFactory.create())
                 .build();
         return config;
     }

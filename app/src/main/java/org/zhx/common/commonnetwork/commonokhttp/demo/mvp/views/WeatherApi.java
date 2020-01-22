@@ -1,5 +1,6 @@
 package org.zhx.common.commonnetwork.commonokhttp.demo.mvp.views;
 
+import org.zhx.common.commonnetwork.commonokhttp.customObservable.CommonObservable;
 import org.zhx.common.commonnetwork.commonokhttp.demo.WeatherInfo;
 import org.zhx.common.mvp.BaseMvpView;
 
@@ -17,7 +18,7 @@ import retrofit2.http.POST;
  */
 public interface WeatherApi {
     @GET("http://t.weather.sojson.com/api/weather/city/101030100")
-    public Observable<WeatherInfo> getTest();
+    public CommonObservable<WeatherInfo> getTest();
 
     public interface view extends BaseMvpView{
         void onWeatherInfo(WeatherInfo info);

@@ -22,7 +22,7 @@ public interface BaseMvpView {
 
     void dismissLoadingDialog();
 
-    void onError(int code, String msg);
+    void onError(String code, String msg);
 
     Context getContext();
 }
