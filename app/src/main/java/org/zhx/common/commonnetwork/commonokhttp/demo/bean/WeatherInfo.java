@@ -1,6 +1,4 @@
-package org.zhx.common.commonnetwork.commonokhttp.demo;
-
-import java.util.List;
+package org.zhx.common.commonnetwork.commonokhttp.demo.bean;
 
 /**
  * Copyright (C), 2015-2020

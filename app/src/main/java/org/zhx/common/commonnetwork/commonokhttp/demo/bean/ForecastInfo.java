@@ -1,4 +1,4 @@
-package org.zhx.common.commonnetwork.commonokhttp.demo;
+package org.zhx.common.commonnetwork.commonokhttp.demo.bean;
 
 /**
  * Copyright (C), 2015-2020

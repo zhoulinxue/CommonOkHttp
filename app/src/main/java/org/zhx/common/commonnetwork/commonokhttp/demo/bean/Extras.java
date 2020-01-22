@@ -1,4 +1,4 @@
-package org.zhx.common.commonnetwork.commonokhttp.demo;
+package org.zhx.common.commonnetwork.commonokhttp.demo.bean;
 
 import java.util.List;
 

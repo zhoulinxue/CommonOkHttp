@@ -8,6 +8,7 @@ import android.widget.TextView;
 import org.zhx.common.commonnetwork.HttpManager;
 import org.zhx.common.commonnetwork.commonokhttp.OkConfig;
 import org.zhx.common.commonnetwork.commonokhttp.OkConfigBuilder;
+import org.zhx.common.commonnetwork.commonokhttp.demo.bean.WeatherInfo;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;

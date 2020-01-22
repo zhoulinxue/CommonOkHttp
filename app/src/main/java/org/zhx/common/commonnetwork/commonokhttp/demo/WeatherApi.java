@@ -1,4 +1,7 @@
 package org.zhx.common.commonnetwork.commonokhttp.demo;
+
+import org.zhx.common.commonnetwork.commonokhttp.demo.bean.WeatherInfo;
+
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 
