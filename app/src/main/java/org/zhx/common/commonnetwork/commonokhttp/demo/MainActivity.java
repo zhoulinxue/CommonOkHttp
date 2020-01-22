@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         OkConfig config = new OkConfigBuilder()
                 .build();
         textView = findViewById(R.id.result_tv);
-        HttpManager.getInstance().creatClientFromCofig(config);
+        HttpManager.getInstance().creatDefaultFromCofig(config);
         HttpManager.getInstance().with(weatherApi.class).getTest().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<WeatherInfo>() {
             @Override
