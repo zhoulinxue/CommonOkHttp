@@ -1,53 +1,51 @@
 package org.zhx.common.commonnetwork.commonokhttp.demo;
 
-import android.content.Intent;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.widget.TextView;
-import org.zhx.common.commonnetwork.commonokhttp.demo.mvp.MvpActivity;
-import org.zhx.common.commonnetwork.commonokhttp.demo.mvp.presenters.WeatherPresenter;
-import org.zhx.common.commonnetwork.commonokhttp.demo.mvp.views.WeatherApi;
 
-public class MainActivity extends MvpActivity<WeatherPresenter> implements WeatherApi.view {
-    private TextView mTextView;
+import org.zhx.common.commonnetwork.HttpManager;
+import org.zhx.common.commonnetwork.commonokhttp.OkConfig;
+import org.zhx.common.commonnetwork.commonokhttp.OkConfigBuilder;
 
-    @Override
-    protected WeatherPresenter initPresenter() {
-        //TODO  初始化  presenter
-        return new WeatherPresenter(this);
-    }
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
-    @Override
-    protected int initLayout() {
-        //TODO 设置布局
-        return R.layout.activity_main;
-    }
+public class MainActivity extends AppCompatActivity {
+    private TextView textView;
 
     @Override
-    protected void onLoadIntentData(Intent intent) {
-        //TODO  获取传递过来的参数
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        OkConfig config = new OkConfigBuilder()
+                .build();
+        textView = findViewById(R.id.result_tv);
+        HttpManager.getInstance().init(config);
+        HttpManager.getInstance().with(WeatherApi.class).getTest().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<WeatherInfo>() {
+            @Override
+            public void onSubscribe(Disposable d) {
 
-    }
+            }
 
-    @Override
-    protected void onLoadDataFromSavedInstanceState(Bundle savedInstanceState) {
-        //TODO  从低内存 获取 参数  （如果 你 在 onSaveInstanceState(Bundle outState) 方法中保存了数据）
-    }
+            @Override
+            public void onNext(WeatherInfo info) {
+                textView.setText(info.toString());
+            }
 
+            @Override
+            public void onError(Throwable e) {
 
-    @Override
-    protected void onCreatView() {
-        //TODO  初始化 组件
-        mTextView = findViewById(R.id.result_tv);
-    }
+            }
 
-    @Override
-    protected void onLoadDataFormNetWork() {
-        //TODO 在这个位置 获取 网络 数据
-        mPresenter.getWeatherInfo();
-    }
+            @Override
+            public void onComplete() {
 
-    @Override
-    public void onWeatherInfo(WeatherInfo info) {
-        mTextView.setText(info.toString());
+            }
+        });
     }
 }

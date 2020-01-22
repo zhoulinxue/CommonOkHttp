@@ -1,2 +1,2 @@
-include ':app', ':library', ':mvplibrary'
+include ':app', ':library'
 rootProject.name='CommonOkHttp'
