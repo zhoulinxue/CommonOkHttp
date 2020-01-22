@@ -31,8 +31,8 @@ public class HttpManager {
     private static HttpManager manager;
     private OkConfig okConfig;
     private Retrofit.Builder defaultBuilder;
-    private OkHttpClient mClient;
     private Map<String, Object> okhttpModel = new HashMap<>();
+    private Map<String, Retrofit.Builder> builderMap = new HashMap<>();
 
     public static HttpManager getInstance() {
         if (manager == null) {
@@ -52,41 +52,54 @@ public class HttpManager {
      *
      * @param builder
      */
-    public void creatClientFromCofig(OkConfig builder) {
+    public void creatDefaultFromCofig(OkConfig builder) {
         this.okConfig = builder;
         if (builder != null) {
-            mClient = builder.getClient() == null ? buildClient(builder) : builder.getClient();
-            defaultBuilder = creatNewBuilder(mClient);
-            if (!TextUtils.isEmpty(builder.getBaseUrl())) {
-                defaultBuilder.baseUrl(builder.getBaseUrl());
-            } else {
-                defaultBuilder.baseUrl("https://www.baidu.com");
-            }
-
-            if (builder.getCallFactory() != null) {
-                defaultBuilder.addCallAdapterFactory(builder.getCallFactory());
-            }
-            if (builder.getConverterFactory() != null) {
-                defaultBuilder.addConverterFactory(builder.getConverterFactory());
-            }
+            defaultBuilder = creatNewBuilder(builder, "default");
         } else {
-            Log.e(TAG, "HttpManger creatClientFromCofig  failed...(commonOkBuilder can  not  be  null)");
+            Log.e(TAG, "HttpManger creatDefaultFromCofig  failed...(commonOkBuilder can  not  be  null)");
         }
     }
 
+    /**
+     * 获取builder
+     *
+     * @param tag
+     * @return
+     */
+    public Retrofit.Builder getRetrofitBuilder(String tag) {
+        Retrofit.Builder defaultBuilder = null;
+        if (!TextUtils.isEmpty(tag)) {
+            defaultBuilder = builderMap.get(tag);
+        }
+        return defaultBuilder;
+    }
 
     /**
      * 初始化 okhttp
      */
-    protected Retrofit.Builder creatNewBuilder(OkHttpClient client) {
+    public Retrofit.Builder creatNewBuilder(OkConfig builder, String tag) {
         Retrofit.Builder defaultBuilder = new Retrofit.Builder();
         defaultBuilder.addConverterFactory(GsonConverterFactory.create());
         defaultBuilder.addCallAdapterFactory(RxJava2CallAdapterFactory.create());
+        OkHttpClient client = builder.getClient() == null ? buildClient(builder) : builder.getClient();
         defaultBuilder.client(client);
+        if (!TextUtils.isEmpty(builder.getBaseUrl())) {
+            defaultBuilder.baseUrl(builder.getBaseUrl());
+        } else {
+            defaultBuilder.baseUrl("https://www.baidu.com");
+        }
+        if (builder.getCallFactory() != null) {
+            defaultBuilder.addCallAdapterFactory(builder.getCallFactory());
+        }
+        if (builder.getConverterFactory() != null) {
+            defaultBuilder.addConverterFactory(builder.getConverterFactory());
+        }
+        builderMap.put(tag, defaultBuilder);
         return defaultBuilder;
     }
 
-    private OkHttpClient buildClient(final OkConfig config) {
+    public OkHttpClient buildClient(final OkConfig config) {
         HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
             public void log(String message) {
@@ -124,12 +137,19 @@ public class HttpManager {
         return client;
     }
 
+    /**
+     * 获取 默认请求 配置 对象
+     *
+     * @param service
+     * @param <T>
+     * @return
+     */
     public <T> T with(Class<T> service) {
         if (service != null) {
             Object object = okhttpModel.get(service.getSimpleName());
             if (object == null) {
                 Log.e(TAG, "creat  new Model" + service.getSimpleName());
-                object = defaultBuilder.build().create(service);
+                object = creatServer(defaultBuilder, service);
                 okhttpModel.put(service.getSimpleName(), object);
             }
             return (T) object;
@@ -137,11 +157,22 @@ public class HttpManager {
         return null;
     }
 
-    public OkConfig getOkConfig() {
-        return okConfig;
+    /**
+     * 通过指定的 配置 获取 请求对象
+     *
+     * @param builder
+     * @param service
+     * @param <T>
+     * @return
+     */
+    public <T> T creatServer(Retrofit.Builder builder, Class<T> service) {
+        if (service != null && builder != null) {
+            return builder.build().create(service);
+        }
+        return null;
     }
 
-    public OkHttpClient getDefaultClient() {
-        return mClient;
+    public OkConfig getOkConfig() {
+        return okConfig;
     }
 }
