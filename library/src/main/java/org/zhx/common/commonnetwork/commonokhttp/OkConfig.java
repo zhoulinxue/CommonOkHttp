@@ -34,6 +34,15 @@ public class OkConfig {
     private Converter.Factory converterFactory;
     private CallAdapter.Factory callFactory;
     private boolean isHttps = false;
+    private String buildName;
+
+    public String getBuildName() {
+        return buildName;
+    }
+
+    public void setBuildName(String buildName) {
+        this.buildName = buildName;
+    }
 
     public CallAdapter.Factory getCallFactory() {
         return callFactory;

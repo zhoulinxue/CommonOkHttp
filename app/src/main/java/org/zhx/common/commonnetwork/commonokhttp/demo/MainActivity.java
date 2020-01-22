@@ -1,7 +1,6 @@
 package org.zhx.common.commonnetwork.commonokhttp.demo;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -14,17 +13,37 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     private TextView textView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    protected int initLayout() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    protected void onLoadIntentData(Intent intent) {
+        //TODO  获取传递过来的参数
         OkConfig config = new OkConfigBuilder()
                 .build();
+        HttpManager.getInstance().init(config);
+    }
+
+    @Override
+    protected void onLoadDataFromSavedInstanceState(Bundle savedInstanceState) {
+        //TODO  从低内存 获取 参数
+    }
+
+    @Override
+    protected void onCreatView() {
+        //TODO  初始化 组件
         textView = findViewById(R.id.result_tv);
-        HttpManager.getInstance().creatDefaultFromCofig(config);
+    }
+
+    @Override
+    protected void onLoadDataFormNetWork() {
+        //TODO  调用接口
+        showLoadingDialog(R.string.loading_default_text);
         HttpManager.getInstance().with(weatherApi.class).getTest().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<WeatherInfo>() {
             @Override
@@ -44,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onComplete() {
-
+                dismissLoadingDialog();
             }
         });
     }
