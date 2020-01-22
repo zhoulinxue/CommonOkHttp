@@ -37,11 +37,14 @@ public abstract class BasePresenter<V extends BaseMvpView> {
      */
     private void creatNewHttpManager() {
         manager = HttpManager.getInstance();
-        manager.init(onCreatHttpCofig());
-        factory = creatNewFactory();
+        OkConfig config = onCreatHttpCofig();
+        manager.init(config);
+        factory = creatNewFactory(config);
     }
 
-    protected OkHttpFactory creatNewFactory() {
+    protected OkHttpFactory creatNewFactory(OkConfig config) {
+//        OkHttpFactory factory = new OkHttpFactory();
+//        factory.creatDefaultFromCofig(config);
         return manager.getDefaultFactory();
     }
 

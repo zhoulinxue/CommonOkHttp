@@ -38,7 +38,7 @@ public class OkHttpFactory {
      *
      * @param builder
      */
-    protected void creatDefaultFromCofig(OkConfig builder) {
+    public void creatDefaultFromCofig(OkConfig builder) {
         this.okConfig = builder;
         if (builder != null) {
             this.builder = creatNewBuilder(builder, "default");
