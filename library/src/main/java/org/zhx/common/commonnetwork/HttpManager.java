@@ -8,8 +8,6 @@ import org.zhx.common.commonnetwork.commonokhttp.OkConfig;
 import java.util.HashMap;
 import java.util.Map;
 
-import retrofit2.Retrofit;
-
 /**
  * Copyright (C), 2015-2020
  * FileName: HttpManager
