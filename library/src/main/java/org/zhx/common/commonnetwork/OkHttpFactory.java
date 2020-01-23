@@ -33,6 +33,7 @@ public class OkHttpFactory {
     public OkHttpFactory() {
         builder = new Retrofit.Builder();
     }
+
     /**
      * 初始化 client
      *
@@ -46,6 +47,7 @@ public class OkHttpFactory {
             Log.e(TAG, "HttpManger creatDefaultFromCofig  failed...(commonOkBuilder can  not  be  null)");
         }
     }
+
     /**
      * 初始化 okhttp
      */
@@ -55,6 +57,7 @@ public class OkHttpFactory {
         defaultBuilder.addCallAdapterFactory(RxJava2CallAdapterFactory.create());
         OkHttpClient client = builder.getClient() == null ? buildClient(builder) : builder.getClient();
         defaultBuilder.client(client);
+        builder.setClient(client);
         if (!TextUtils.isEmpty(builder.getBaseUrl())) {
             defaultBuilder.baseUrl(builder.getBaseUrl());
         } else {
