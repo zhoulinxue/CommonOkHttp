@@ -36,9 +36,9 @@ public class HttpManager {
 
     public HttpManager() {
         defaultFactory = new OkHttpFactory();
-        OkConfig config = new OkConfigBuilder()
+        OkConfig config = new OkConfigBuilder(DEFAULT)
                 .build();
-        initFactoryByTag(config, DEFAULT);
+        initFactoryByTag(config);
     }
 
     /**
@@ -46,10 +46,10 @@ public class HttpManager {
      *
      * @param builder
      */
-    public void initFactoryByTag(OkConfig builder, String tag) {
+    public void initFactoryByTag(OkConfig builder) {
         OkHttpFactory factory = new OkHttpFactory();
         factory.creatBuilderFromCofig(builder);
-        builderMap.put(tag, factory);
+        builderMap.put(builder.getBuilderTag(), factory);
     }
 
     /**
@@ -83,7 +83,7 @@ public class HttpManager {
                 if (factory == null) {
                     factory = defaultFactory;
                 }
-                object = creatServerFromFactory(defaultFactory, service);
+                object = creatServerFromFactory(factory, service);
                 okhttpModel.put(service.getSimpleName(), object);
             }
             return (T) object;

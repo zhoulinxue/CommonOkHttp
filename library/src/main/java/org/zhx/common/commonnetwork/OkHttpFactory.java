@@ -33,7 +33,7 @@ public class OkHttpFactory {
     private String TAG = OkHttpFactory.class.getSimpleName();
 
     public OkHttpFactory() {
-        builder = new Retrofit.Builder();
+
     }
 
     /**

@@ -35,7 +35,16 @@ public class OkConfig {
     private CallAdapter.Factory callFactory;
     private boolean isHttps = false;
     private String buildName;
+    private String builderTag;
 
+    public String getBuilderTag() {
+        return builderTag;
+    }
+
+    public OkConfig setBuilderTag(String builderTag) {
+        this.builderTag = builderTag;
+        return this;
+    }
     public String getBuildName() {
         return buildName;
     }

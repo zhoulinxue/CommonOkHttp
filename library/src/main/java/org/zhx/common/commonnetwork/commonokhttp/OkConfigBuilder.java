@@ -45,6 +45,19 @@ public class OkConfigBuilder {
     private Converter.Factory converterFactory;
     private CallAdapter.Factory callFactory;
     private boolean isHttps = false;
+    private String builderTag;
+
+    public OkConfigBuilder(String builderTag) {
+        this.builderTag = builderTag;
+        x509TrustManager = x509();
+        hostnameVerifier = hostVerifier();
+        cookieJar = cookiejar();
+        sslContext();
+    }
+
+    public String getBuilderTag() {
+        return builderTag;
+    }
 
     public OkConfigBuilder setCallFactory(CallAdapter.Factory callFactory) {
         this.callFactory = callFactory;
@@ -64,13 +77,6 @@ public class OkConfigBuilder {
     public OkConfigBuilder setSslContext(SSLContext sslContext) {
         this.sslContext = sslContext;
         return this;
-    }
-
-    public OkConfigBuilder() {
-        x509TrustManager = x509();
-        hostnameVerifier = hostVerifier();
-        cookieJar = cookiejar();
-        sslContext();
     }
 
     private void sslContext() {
@@ -203,7 +209,7 @@ public class OkConfigBuilder {
 
         config.setCallFactory(callFactory);
         config.setConverterFactory(converterFactory);
-
+        config.setBuilderTag(getBuilderTag());
         return config;
     }
 }
