@@ -4,6 +4,8 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import org.zhx.common.commonnetwork.commonokhttp.OkConfig;
+import org.zhx.common.commonnetwork.commonokhttp.OkConfigBuilder;
+import org.zhx.common.commonnetwork.commonokhttp.customObservable.CommonCallAdapterFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +36,9 @@ public class HttpManager {
 
     public HttpManager() {
         defaultFactory = new OkHttpFactory();
+        OkConfig config = new OkConfigBuilder()
+                .build();
+        initFactoryByTag(config, DEFAULT);
     }
 
     /**
@@ -41,11 +46,10 @@ public class HttpManager {
      *
      * @param builder
      */
-    public void init(OkConfig builder) {
-        if (defaultFactory != null) {
-            defaultFactory.creatDefaultFromCofig(builder);
-            builderMap.put(DEFAULT, defaultFactory);
-        }
+    public void initFactoryByTag(OkConfig builder, String tag) {
+        OkHttpFactory factory = new OkHttpFactory();
+        factory.creatBuilderFromCofig(builder);
+        builderMap.put(tag, factory);
     }
 
     /**
@@ -73,8 +77,12 @@ public class HttpManager {
     public <T> T with(Class<T> service) {
         if (service != null) {
             Object object = okhttpModel.get(service.getSimpleName());
+            OkHttpFactory factory = builderMap.get(service.getSimpleName());
             if (object == null) {
                 Log.e(TAG, "creat  new Model" + service.getSimpleName());
+                if (factory == null) {
+                    factory = defaultFactory;
+                }
                 object = creatServerFromFactory(defaultFactory, service);
                 okhttpModel.put(service.getSimpleName(), object);
             }

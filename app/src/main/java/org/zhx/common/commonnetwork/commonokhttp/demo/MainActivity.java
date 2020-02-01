@@ -14,6 +14,7 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 public class MainActivity extends AppCompatActivity {
     private TextView textView;
@@ -22,10 +23,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        OkConfig config = new OkConfigBuilder()
-                .build();
         textView = findViewById(R.id.result_tv);
-        HttpManager.getInstance().init(config);
         HttpManager.getInstance().with(WeatherApi.class).getTest().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<WeatherInfo>() {
             @Override

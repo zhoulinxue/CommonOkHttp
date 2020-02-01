@@ -4,6 +4,8 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import org.zhx.common.commonnetwork.commonokhttp.OkConfig;
+import org.zhx.common.commonnetwork.commonokhttp.OkConfigBuilder;
+import org.zhx.common.commonnetwork.commonokhttp.customObservable.CommonCallAdapterFactory;
 
 import java.io.IOException;
 import java.util.Map;
@@ -39,19 +41,19 @@ public class OkHttpFactory {
      *
      * @param builder
      */
-    public void creatDefaultFromCofig(OkConfig builder) {
+    public void creatBuilderFromCofig(OkConfig builder) {
         this.okConfig = builder;
         if (builder != null) {
-            this.builder = creatNewBuilder(builder, "default");
+            this.builder = creatNewBuilder(builder);
         } else {
-            Log.e(TAG, "HttpManger creatDefaultFromCofig  failed...(commonOkBuilder can  not  be  null)");
+            Log.e(TAG, "HttpManger creatBuilderFromCofig  failed...(commonOkBuilder can  not  be  null)");
         }
     }
 
     /**
      * 初始化 okhttp
      */
-    protected Retrofit.Builder creatNewBuilder(OkConfig builder, String tag) {
+    protected Retrofit.Builder creatNewBuilder(OkConfig builder) {
         Retrofit.Builder defaultBuilder = new Retrofit.Builder();
         defaultBuilder.addConverterFactory(GsonConverterFactory.create());
         defaultBuilder.addCallAdapterFactory(RxJava2CallAdapterFactory.create());
@@ -80,7 +82,7 @@ public class OkHttpFactory {
             }
         });
         logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient.Builder builder = new OkHttpClient.Builder()
+        final OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 .addInterceptor(logInterceptor)
                 .connectTimeout(config.getConnectTimeout(), TimeUnit.SECONDS)
                 .writeTimeout(config.getWriteTimeout(), TimeUnit.SECONDS)
@@ -90,16 +92,15 @@ public class OkHttpFactory {
                     @Override
                     public Response intercept(Chain chain) throws IOException {
                         Request.Builder requstBuilder = chain.request().newBuilder();
-                        Request request = requstBuilder.build();
                         if (config.getInterceptor() == null) {
-                            return chain.proceed(request);
+                            return chain.proceed(requstBuilder.build());
                         }
                         Map<String, String> map = config.getInterceptor().creatHeader();
                         if (map != null)
                             for (String key : map.keySet()) {
                                 requstBuilder.addHeader(key, map.get(key));
                             }
-                        return chain.proceed(request);
+                        return chain.proceed(requstBuilder.build());
                     }
                 });
         if (config.isHttps()) {
