@@ -42,7 +42,7 @@ public class OkHttpFactory {
     public void creatDefaultFromCofig(OkConfig builder) {
         this.okConfig = builder;
         if (builder != null) {
-            this.builder = creatNewBuilder(builder, "default");
+            this.builder = creatNewBuilder(builder);
         } else {
             Log.e(TAG, "HttpManger creatDefaultFromCofig  failed...(commonOkBuilder can  not  be  null)");
         }
@@ -51,7 +51,7 @@ public class OkHttpFactory {
     /**
      * 初始化 okhttp
      */
-    protected Retrofit.Builder creatNewBuilder(OkConfig builder, String tag) {
+    protected Retrofit.Builder creatNewBuilder(OkConfig builder) {
         Retrofit.Builder defaultBuilder = new Retrofit.Builder();
         defaultBuilder.addConverterFactory(GsonConverterFactory.create());
         defaultBuilder.addCallAdapterFactory(RxJava2CallAdapterFactory.create());
