@@ -18,7 +18,6 @@ import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Copyright (C), 2015-2020
@@ -55,8 +54,6 @@ public class OkHttpFactory {
      */
     protected Retrofit.Builder creatNewBuilder(OkConfig builder) {
         Retrofit.Builder defaultBuilder = new Retrofit.Builder();
-        defaultBuilder.addConverterFactory(GsonConverterFactory.create());
-        defaultBuilder.addCallAdapterFactory(RxJava2CallAdapterFactory.create());
         OkHttpClient client = builder.getClient() == null ? buildClient(builder) : builder.getClient();
         defaultBuilder.client(client);
         builder.setClient(client);
@@ -67,6 +64,8 @@ public class OkHttpFactory {
         }
         if (builder.getCallFactory() != null) {
             defaultBuilder.addCallAdapterFactory(builder.getCallFactory());
+        }else {
+            defaultBuilder.addCallAdapterFactory(RxJava2CallAdapterFactory.create());
         }
         if (builder.getConverterFactory() != null) {
             defaultBuilder.addConverterFactory(builder.getConverterFactory());

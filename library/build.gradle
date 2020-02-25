@@ -39,7 +39,6 @@ dependencies {
     api rootProject.ext.rxjava
     api rootProject.ext.retrofitAdapter
     api rootProject.ext.rxAndroid
-    api rootProject.ext.gson
     api rootProject.ext.appCompat
     //------------------------------
     testImplementation 'junit:junit:4.12'

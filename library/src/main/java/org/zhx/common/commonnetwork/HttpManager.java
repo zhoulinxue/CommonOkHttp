@@ -56,7 +56,7 @@ public class HttpManager {
      * @param builder
      */
     public void initFactoryByTag(OkConfig builder) {
-        OkHttpFactory factory = builderMap.get(builder.getBuilderTag());
+        OkHttpFactory factory = builderMap.get(builder.getBuilderTag().getSimpleName());
         if (factory == null) {
             factory = new OkHttpFactory();
             factory.creatBuilderFromCofig(builder);
