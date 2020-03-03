@@ -2,6 +2,8 @@ package org.zhx.common.commonnetwork.commonokhttp;
 
 import android.content.Context;
 
+import org.zhx.common.commonnetwork.HttpManager;
+
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
@@ -45,6 +47,19 @@ public class OkConfigBuilder {
     private Converter.Factory converterFactory;
     private CallAdapter.Factory callFactory;
     private boolean isHttps = false;
+    private Class builderTag;
+
+    public OkConfigBuilder(Class builderTag) {
+        this.builderTag = builderTag;
+        x509TrustManager = x509();
+        hostnameVerifier = hostVerifier();
+        cookieJar = cookiejar();
+        sslContext();
+    }
+
+    public Class getBuilderTag() {
+        return builderTag;
+    }
 
     public OkConfigBuilder setCallFactory(CallAdapter.Factory callFactory) {
         this.callFactory = callFactory;
@@ -64,13 +79,6 @@ public class OkConfigBuilder {
     public OkConfigBuilder setSslContext(SSLContext sslContext) {
         this.sslContext = sslContext;
         return this;
-    }
-
-    public OkConfigBuilder() {
-        x509TrustManager = x509();
-        hostnameVerifier = hostVerifier();
-        cookieJar = cookiejar();
-        sslContext();
     }
 
     private void sslContext() {
@@ -203,7 +211,7 @@ public class OkConfigBuilder {
 
         config.setCallFactory(callFactory);
         config.setConverterFactory(converterFactory);
-
+        config.setBuilderTag(getBuilderTag());
         return config;
     }
 }

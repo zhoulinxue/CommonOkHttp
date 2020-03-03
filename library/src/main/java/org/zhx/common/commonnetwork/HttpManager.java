@@ -4,9 +4,12 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import org.zhx.common.commonnetwork.commonokhttp.OkConfig;
+import org.zhx.common.commonnetwork.commonokhttp.OkConfigBuilder;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import retrofit2.Retrofit;
 
 /**
  * Copyright (C), 2015-2020
@@ -20,8 +23,11 @@ public class HttpManager {
     private static HttpManager manager;
     private Map<String, Object> okhttpModel = new HashMap<>();
     private Map<String, OkHttpFactory> builderMap = new HashMap<>();
-    private OkHttpFactory defaultFactory;
-    private final String DEFAULT = "default";
+    private Class defaultTag;
+
+    public void setDefaultTag(Class defaultTag) {
+        this.defaultTag = defaultTag;
+    }
 
     public static HttpManager getInstance() {
         if (manager == null) {
@@ -33,7 +39,15 @@ public class HttpManager {
     }
 
     public HttpManager() {
-        defaultFactory = new OkHttpFactory();
+        defaultTag = HttpManager.class;
+    }
+
+    /**
+     * 初始化 client
+     */
+    public void init() {
+        OkConfig builder = new OkConfigBuilder(defaultTag).build();
+        initFactoryByTag(builder);
     }
 
     /**
@@ -41,10 +55,12 @@ public class HttpManager {
      *
      * @param builder
      */
-    public void init(OkConfig builder) {
-        if (defaultFactory != null) {
-            defaultFactory.creatDefaultFromCofig(builder);
-            builderMap.put(DEFAULT, defaultFactory);
+    public void initFactoryByTag(OkConfig builder) {
+        OkHttpFactory factory = builderMap.get(builder.getBuilderTag().getSimpleName());
+        if (factory == null) {
+            factory = new OkHttpFactory();
+            factory.creatBuilderFromCofig(builder);
+            builderMap.put(builder.getBuilderTag().getSimpleName(), factory);
         }
     }
 
@@ -73,9 +89,13 @@ public class HttpManager {
     public <T> T with(Class<T> service) {
         if (service != null) {
             Object object = okhttpModel.get(service.getSimpleName());
+            OkHttpFactory factory = builderMap.get(service.getSimpleName());
             if (object == null) {
                 Log.e(TAG, "creat  new Model" + service.getSimpleName());
-                object = creatServerFromFactory(defaultFactory, service);
+                if (factory == null) {
+                    factory = getDefaultFactory();
+                }
+                object = creatServerFromFactory(factory, service);
                 okhttpModel.put(service.getSimpleName(), object);
             }
             return (T) object;
@@ -93,12 +113,16 @@ public class HttpManager {
      */
     public <T> T creatServerFromFactory(OkHttpFactory factory, Class<T> service) {
         if (service != null && factory != null) {
-            return factory.getBuilder().build().create(service);
+            Retrofit.Builder builder = factory.getBuilder();
+            if (builder == null) {
+                builder = getDefaultFactory().getBuilder();
+            }
+            return builder.build().create(service);
         }
         return null;
     }
 
     public OkHttpFactory getDefaultFactory() {
-        return getOkFactorey(DEFAULT);
+        return getOkFactorey(defaultTag.getSimpleName());
     }
 }

@@ -4,6 +4,8 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import org.zhx.common.commonnetwork.commonokhttp.OkConfig;
+import org.zhx.common.commonnetwork.commonokhttp.OkConfigBuilder;
+import org.zhx.common.commonnetwork.commonokhttp.customObservable.CommonCallAdapterFactory;
 
 import java.io.IOException;
 import java.util.Map;
@@ -16,7 +18,6 @@ import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Copyright (C), 2015-2020
@@ -31,7 +32,7 @@ public class OkHttpFactory {
     private String TAG = OkHttpFactory.class.getSimpleName();
 
     public OkHttpFactory() {
-        builder = new Retrofit.Builder();
+
     }
 
     /**
@@ -39,12 +40,12 @@ public class OkHttpFactory {
      *
      * @param builder
      */
-    public void creatDefaultFromCofig(OkConfig builder) {
+    public void creatBuilderFromCofig(OkConfig builder) {
         this.okConfig = builder;
         if (builder != null) {
             this.builder = creatNewBuilder(builder);
         } else {
-            Log.e(TAG, "HttpManger creatDefaultFromCofig  failed...(commonOkBuilder can  not  be  null)");
+            Log.e(TAG, "HttpManger creatBuilderFromCofig  failed...(commonOkBuilder can  not  be  null)");
         }
     }
 
@@ -53,8 +54,6 @@ public class OkHttpFactory {
      */
     protected Retrofit.Builder creatNewBuilder(OkConfig builder) {
         Retrofit.Builder defaultBuilder = new Retrofit.Builder();
-        defaultBuilder.addConverterFactory(GsonConverterFactory.create());
-        defaultBuilder.addCallAdapterFactory(RxJava2CallAdapterFactory.create());
         OkHttpClient client = builder.getClient() == null ? buildClient(builder) : builder.getClient();
         defaultBuilder.client(client);
         builder.setClient(client);
@@ -65,6 +64,8 @@ public class OkHttpFactory {
         }
         if (builder.getCallFactory() != null) {
             defaultBuilder.addCallAdapterFactory(builder.getCallFactory());
+        }else {
+            defaultBuilder.addCallAdapterFactory(RxJava2CallAdapterFactory.create());
         }
         if (builder.getConverterFactory() != null) {
             defaultBuilder.addConverterFactory(builder.getConverterFactory());
@@ -80,7 +81,7 @@ public class OkHttpFactory {
             }
         });
         logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient.Builder builder = new OkHttpClient.Builder()
+        final OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 .addInterceptor(logInterceptor)
                 .connectTimeout(config.getConnectTimeout(), TimeUnit.SECONDS)
                 .writeTimeout(config.getWriteTimeout(), TimeUnit.SECONDS)
@@ -90,9 +91,8 @@ public class OkHttpFactory {
                     @Override
                     public Response intercept(Chain chain) throws IOException {
                         Request.Builder requstBuilder = chain.request().newBuilder();
-                        Request request = requstBuilder.build();
                         if (config.getInterceptor() == null) {
-                            return chain.proceed(request);
+                            return chain.proceed(requstBuilder.build());
                         }
                         Map<String, String> map = config.getInterceptor().creatHeader();
                         if (map != null)
@@ -100,7 +100,7 @@ public class OkHttpFactory {
                                 Log.e(TAG,"header:  "+key+"="+map.get(key));
                                 requstBuilder.addHeader(key, map.get(key));
                             }
-                        return chain.proceed(request);
+                        return chain.proceed(requstBuilder.build());
                     }
                 });
         if (config.isHttps()) {

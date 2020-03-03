@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import org.zhx.common.commonnetwork.HttpManager;
-import org.zhx.common.commonnetwork.commonokhttp.OkConfig;
-import org.zhx.common.commonnetwork.commonokhttp.OkConfigBuilder;
 import org.zhx.common.commonnetwork.commonokhttp.demo.bean.WeatherInfo;
 
 import io.reactivex.Observer;
@@ -22,10 +20,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        OkConfig config = new OkConfigBuilder()
-                .build();
         textView = findViewById(R.id.result_tv);
-        HttpManager.getInstance().init(config);
+        HttpManager.getInstance().init();
         HttpManager.getInstance().with(WeatherApi.class).getTest().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<WeatherInfo>() {
             @Override
