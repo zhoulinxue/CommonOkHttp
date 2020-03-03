@@ -97,6 +97,7 @@ public class OkHttpFactory {
                         Map<String, String> map = config.getInterceptor().creatHeader();
                         if (map != null)
                             for (String key : map.keySet()) {
+                                Log.e(TAG,"header:  "+key+"="+map.get(key));
                                 requstBuilder.addHeader(key, map.get(key));
                             }
                         return chain.proceed(request);
