@@ -9,6 +9,7 @@ import org.zhx.common.commonnetwork.commonokhttp.OkConfigBuilder;
 import java.util.HashMap;
 import java.util.Map;
 
+import retrofit2.Converter;
 import retrofit2.Retrofit;
 
 /**
@@ -24,7 +25,7 @@ public class HttpManager {
     private Map<String, Object> okhttpModel = new HashMap<>();
     private Map<String, OkHttpFactory> builderMap = new HashMap<>();
     private Class defaultTag;
-
+    private Converter.Factory  mConvertFactory;
     public void setDefaultTag(Class defaultTag) {
         this.defaultTag = defaultTag;
     }
@@ -45,7 +46,8 @@ public class HttpManager {
     /**
      * 初始化 client
      */
-    public void init() {
+    public void init(Converter.Factory  convertFactory) {
+        this.mConvertFactory=convertFactory;
         OkConfig builder = new OkConfigBuilder(defaultTag).build();
         initFactoryByTag(builder);
     }
@@ -58,7 +60,7 @@ public class HttpManager {
     public void initFactoryByTag(OkConfig builder) {
         OkHttpFactory factory = builderMap.get(builder.getBuilderTag().getSimpleName());
         if (factory == null) {
-            factory = new OkHttpFactory();
+            factory = new OkHttpFactory(mConvertFactory);
             factory.creatBuilderFromCofig(builder);
             builderMap.put(builder.getBuilderTag().getSimpleName(), factory);
         }

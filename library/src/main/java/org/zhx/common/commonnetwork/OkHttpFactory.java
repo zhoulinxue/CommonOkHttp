@@ -16,6 +16,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
@@ -30,9 +31,10 @@ public class OkHttpFactory {
     private OkConfig okConfig;
     private Retrofit.Builder builder;
     private String TAG = OkHttpFactory.class.getSimpleName();
+    private Converter.Factory  mConvertFactory;
 
-    public OkHttpFactory() {
-
+    public OkHttpFactory(Converter.Factory mConvertFactory) {
+        this.mConvertFactory = mConvertFactory;
     }
 
     /**
@@ -69,6 +71,8 @@ public class OkHttpFactory {
         }
         if (builder.getConverterFactory() != null) {
             defaultBuilder.addConverterFactory(builder.getConverterFactory());
+        }else {
+            defaultBuilder.addConverterFactory(mConvertFactory);
         }
         return defaultBuilder;
     }
