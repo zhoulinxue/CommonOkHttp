@@ -33,7 +33,7 @@ public class OkConfig {
     private CookieJar cookieJar;
     private Converter.Factory converterFactory;
     private CallAdapter.Factory callFactory;
-    private boolean isHttps = false;
+    private boolean isHttps = true;
     private String buildName;
     private Class builderTag;
 
