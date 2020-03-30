@@ -26,5 +26,5 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation project(':library')
     implementation 'com.squareup.retrofit2:converter-gson:2.0.2'
-//    implementation 'org.zhx.common:commonOkhttp:1.0.8'
+//    implementation 'org.zhx.common:commonOkhttp:1.2.2'
 }
