@@ -7,6 +7,7 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.X509TrustManager;
 
 import okhttp3.CookieJar;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import retrofit2.CallAdapter;
 import retrofit2.Converter;
@@ -36,6 +37,7 @@ public class OkConfig {
     private boolean isHttps = true;
     private String buildName;
     private Class builderTag;
+    private Interceptor OkInterceptor;
 
     public Class getBuilderTag() {
         return builderTag;
@@ -159,6 +161,15 @@ public class OkConfig {
 
     public void setHttps(boolean https) {
         isHttps = https;
+    }
+
+    public Interceptor getOkInterceptor() {
+        return OkInterceptor;
+    }
+
+    public OkConfig setOkInterceptor(Interceptor okInterceptor) {
+        OkInterceptor = okInterceptor;
+        return this;
     }
 
     public boolean isHttps() {

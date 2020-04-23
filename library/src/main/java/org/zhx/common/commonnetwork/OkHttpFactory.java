@@ -31,7 +31,7 @@ public class OkHttpFactory {
     private OkConfig okConfig;
     private Retrofit.Builder builder;
     private String TAG = OkHttpFactory.class.getSimpleName();
-    private Converter.Factory  mConvertFactory;
+    private Converter.Factory mConvertFactory;
 
     public OkHttpFactory(Converter.Factory mConvertFactory) {
         this.mConvertFactory = mConvertFactory;
@@ -66,12 +66,12 @@ public class OkHttpFactory {
         }
         if (builder.getCallFactory() != null) {
             defaultBuilder.addCallAdapterFactory(builder.getCallFactory());
-        }else {
+        } else {
             defaultBuilder.addCallAdapterFactory(RxJava2CallAdapterFactory.create());
         }
         if (builder.getConverterFactory() != null) {
             defaultBuilder.addConverterFactory(builder.getConverterFactory());
-        }else {
+        } else {
             defaultBuilder.addConverterFactory(mConvertFactory);
         }
         return defaultBuilder;
@@ -85,28 +85,29 @@ public class OkHttpFactory {
             }
         });
         logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        Interceptor interceptor = config.getOkInterceptor() == null ? new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                Request.Builder requstBuilder = chain.request().newBuilder();
+                if (config.getInterceptor() == null) {
+                    return chain.proceed(requstBuilder.build());
+                }
+                Map<String, String> map = config.getInterceptor().creatHeader();
+                if (map != null)
+                    for (String key : map.keySet()) {
+                        Log.e(TAG, "header:  " + key + "=" + map.get(key));
+                        requstBuilder.addHeader(key, map.get(key));
+                    }
+                return chain.proceed(requstBuilder.build());
+            }
+        } : config.getOkInterceptor();
         final OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 .addInterceptor(logInterceptor)
                 .connectTimeout(config.getConnectTimeout(), TimeUnit.SECONDS)
                 .writeTimeout(config.getWriteTimeout(), TimeUnit.SECONDS)
                 .readTimeout(config.getReadTimeout(), TimeUnit.SECONDS)
                 .cookieJar(config.getCookieJar())
-                .addInterceptor(new Interceptor() {
-                    @Override
-                    public Response intercept(Chain chain) throws IOException {
-                        Request.Builder requstBuilder = chain.request().newBuilder();
-                        if (config.getInterceptor() == null) {
-                            return chain.proceed(requstBuilder.build());
-                        }
-                        Map<String, String> map = config.getInterceptor().creatHeader();
-                        if (map != null)
-                            for (String key : map.keySet()) {
-                                Log.e(TAG,"header:  "+key+"="+map.get(key));
-                                requstBuilder.addHeader(key, map.get(key));
-                            }
-                        return chain.proceed(requstBuilder.build());
-                    }
-                });
+                .addInterceptor(interceptor);
         if (config.isHttps()) {
             builder.sslSocketFactory(config.getSslContext().getSocketFactory(), config.getX509TrustManager())
                     .hostnameVerifier(config.getHostnameVerifier());
