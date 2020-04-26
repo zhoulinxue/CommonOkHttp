@@ -11,6 +11,7 @@ import org.zhx.common.commonnetwork.commonokhttp.customObservable.api.CommonNetR
 
 import java.io.InterruptedIOException;
 import java.net.ConnectException;
+import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.text.ParseException;
 import java.util.List;
@@ -90,6 +91,9 @@ public class CommonOkHttpRequest<R, T> implements CommonNetRequest {
         @Override
         public void onError(Throwable e) {
             Log.e(TAG, "onError....");
+            if (mCallback != null) {
+                mCallback.onLoadComplete();
+            }
             CommonLocalError error = null;
             String msg = e.getMessage();
             try {
@@ -107,7 +111,7 @@ public class CommonOkHttpRequest<R, T> implements CommonNetRequest {
                 } else if (e instanceof ConnectException
                         || e instanceof UnknownHostException) {   //   连接错误
                     error = CommonLocalError.CONNECT_ERROR;
-                } else if (e instanceof InterruptedIOException) {   //  连接超时
+                } else if (e instanceof InterruptedIOException) { //  连接超时
                     error = CommonLocalError.CONNECT_TIMEOUT;
                 } else if (e instanceof JSONException
                         || e instanceof NumberFormatException
