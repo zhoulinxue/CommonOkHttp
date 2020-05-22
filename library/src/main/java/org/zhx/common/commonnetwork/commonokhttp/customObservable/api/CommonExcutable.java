@@ -1,5 +1,7 @@
 package org.zhx.common.commonnetwork.commonokhttp.customObservable.api;
 
+import org.zhx.common.commonnetwork.commonokhttp.customObservable.CommonOkHttpRequest;
+
 /**
  * Copyright (C), 2015-2019
  * FileName: CommonExcutable
@@ -8,5 +10,5 @@ package org.zhx.common.commonnetwork.commonokhttp.customObservable.api;
  * Description:
  */
 public interface CommonExcutable {
-    public void excute();
+    public CommonNetRequest excute();
 }

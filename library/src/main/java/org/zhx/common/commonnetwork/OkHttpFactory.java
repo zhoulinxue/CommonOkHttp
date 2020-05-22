@@ -3,10 +3,6 @@ package org.zhx.common.commonnetwork;
 import android.text.TextUtils;
 import android.util.Log;
 
-import org.zhx.common.commonnetwork.commonokhttp.OkConfig;
-import org.zhx.common.commonnetwork.commonokhttp.OkConfigBuilder;
-import org.zhx.common.commonnetwork.commonokhttp.customObservable.CommonCallAdapterFactory;
-
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -28,7 +24,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
  * Description:
  */
 public class OkHttpFactory {
-    private OkConfig okConfig;
+    private org.zhx.common.commonnetwork.commonokhttp.OkConfig okConfig;
     private Retrofit.Builder builder;
     private String TAG = OkHttpFactory.class.getSimpleName();
     private Converter.Factory mConvertFactory;
@@ -42,7 +38,7 @@ public class OkHttpFactory {
      *
      * @param builder
      */
-    public void creatBuilderFromCofig(OkConfig builder) {
+    public void creatBuilderFromCofig(org.zhx.common.commonnetwork.commonokhttp.OkConfig builder) {
         this.okConfig = builder;
         if (builder != null) {
             this.builder = creatNewBuilder(builder);
@@ -54,7 +50,7 @@ public class OkHttpFactory {
     /**
      * 初始化 okhttp
      */
-    protected Retrofit.Builder creatNewBuilder(OkConfig builder) {
+    protected Retrofit.Builder creatNewBuilder(org.zhx.common.commonnetwork.commonokhttp.OkConfig builder) {
         Retrofit.Builder defaultBuilder = new Retrofit.Builder();
         OkHttpClient client = builder.getClient() == null ? buildClient(builder) : builder.getClient();
         defaultBuilder.client(client);
@@ -77,14 +73,14 @@ public class OkHttpFactory {
         return defaultBuilder;
     }
 
-    protected OkHttpClient buildClient(final OkConfig config) {
+    protected OkHttpClient buildClient(final org.zhx.common.commonnetwork.commonokhttp.OkConfig config) {
         HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
             public void log(String message) {
                 Log.e(TAG, message);
             }
         });
-        logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        logInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
         Interceptor interceptor = config.getOkInterceptor() == null ? new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
@@ -120,7 +116,7 @@ public class OkHttpFactory {
         return builder;
     }
 
-    public OkConfig getOkConfig() {
+    public org.zhx.common.commonnetwork.commonokhttp.OkConfig getOkConfig() {
         return okConfig;
     }
 }

@@ -25,7 +25,7 @@ public enum CommonLocalError {
     SYSTEM_BUSY(10505, "系统繁忙，请稍候再试"),
     SYSTEM_ERROR(10506, "系统错误"),
     PARSE_ERROR(101, "解析数据失败"),
-    BAD_NETWORK(102, "网络状态差"),
+    BAD_NETWORK(102, "请打开网络连接"),
     CONNECT_ERROR(103, "连接错误"),
     CONNECT_TIMEOUT(104, "连接超时"),
     UNKNOWN_LOCAL_ERROR(105, "未知错误"),

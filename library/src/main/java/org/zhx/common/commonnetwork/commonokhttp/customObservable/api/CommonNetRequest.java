@@ -12,5 +12,8 @@ import java.util.List;
 public interface CommonNetRequest {
     public void cancel();
 
-    public void start(List<CommonNetRequest> requestList);
+    public CommonNetRequest start(List<CommonNetRequest> requestList);
+
+    public CommonNetRequest start();
+
 }

@@ -24,12 +24,8 @@ public class HttpManager {
     private static HttpManager manager;
     private Map<String, Object> okhttpModel = new HashMap<>();
     private Map<String, OkHttpFactory> builderMap = new HashMap<>();
-    private Class defaultTag;
+    public static String DEFAULT_TAG ="HttpManager";
     private Converter.Factory  mConvertFactory;
-    public void setDefaultTag(Class defaultTag) {
-        this.defaultTag = defaultTag;
-    }
-
     public static HttpManager getInstance() {
         if (manager == null) {
             synchronized (HttpManager.class) {
@@ -40,7 +36,6 @@ public class HttpManager {
     }
 
     public HttpManager() {
-        defaultTag = HttpManager.class;
     }
 
     /**
@@ -48,22 +43,27 @@ public class HttpManager {
      */
     public void init(Converter.Factory  convertFactory) {
         this.mConvertFactory=convertFactory;
-        OkConfig builder = new OkConfigBuilder(defaultTag).build();
+        OkConfig builder = new OkConfigBuilder(DEFAULT_TAG).build();
         initFactoryByTag(builder);
     }
 
     /**
      * 初始化 client
      *
-     * @param builder
+     * @param okConfig
      */
-    public void initFactoryByTag(OkConfig builder) {
-        OkHttpFactory factory = builderMap.get(builder.getBuilderTag().getSimpleName());
+    public void initFactoryByTag(OkConfig okConfig) {
+        OkHttpFactory factory = builderMap.get(okConfig.getBuilderTag());
         if (factory == null) {
-            factory = new OkHttpFactory(mConvertFactory);
-            factory.creatBuilderFromCofig(builder);
-            builderMap.put(builder.getBuilderTag().getSimpleName(), factory);
+            factory = creatNewFactory(okConfig);
+            builderMap.put(okConfig.getBuilderTag(), factory);
         }
+    }
+
+    public OkHttpFactory creatNewFactory(OkConfig okConfig) {
+        OkHttpFactory factory=new OkHttpFactory(mConvertFactory);
+        factory.creatBuilderFromCofig(okConfig);
+        return factory;
     }
 
     /**
@@ -73,11 +73,11 @@ public class HttpManager {
      * @return
      */
     public OkHttpFactory getOkFactorey(String tag) {
-        OkHttpFactory defaultBuilder = null;
+        OkHttpFactory builder = null;
         if (!TextUtils.isEmpty(tag)) {
-            defaultBuilder = builderMap.get(tag);
+            builder = builderMap.get(tag);
         }
-        return defaultBuilder;
+        return builder;
     }
 
 
@@ -106,6 +106,33 @@ public class HttpManager {
     }
 
     /**
+     * 获取 默认请求 配置 对象
+     *
+     * @param service
+     * @param <T>
+     * @return
+     */
+    public <T> T with(Class<T> service,  OkConfig config) {
+        OkHttpFactory factory=null;
+        if(config!=null){
+            factory=builderMap.get(config.getBuilderTag());
+            if(factory==null) {
+                factory = creatNewFactory(config);
+                builderMap.put(config.getBuilderTag(), factory);
+            }
+        }
+        if (service != null) {
+            T object = (T)okhttpModel.get(service.getSimpleName());
+            if (object == null) {
+                Log.e(TAG, "creat  new Model" + service.getSimpleName());
+                object = creatServerFromFactory(factory, service);
+            }
+            return (T) object;
+        }
+        return null;
+    }
+
+    /**
      * 通过指定的 配置 获取 请求对象
      *
      * @param factory
@@ -125,6 +152,6 @@ public class HttpManager {
     }
 
     public OkHttpFactory getDefaultFactory() {
-        return getOkFactorey(defaultTag.getSimpleName());
+        return getOkFactorey(DEFAULT_TAG);
     }
 }

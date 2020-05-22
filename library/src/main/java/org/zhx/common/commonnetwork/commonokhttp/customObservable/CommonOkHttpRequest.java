@@ -53,13 +53,33 @@ public class CommonOkHttpRequest<R, T> implements CommonNetRequest {
     }
 
     @Override
-    public void start(List<CommonNetRequest> requestList) {
+    public CommonNetRequest start(List<CommonNetRequest> requestList) {
         mObservable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mObserver);
         if (requestList != null) {
             requestList.add(this);
         }
+        return this;
+    }
+
+    private void add(List<CommonNetRequest> request) {
+        Log.e(TAG, "add..");
+        if (request != null && !request.contains(this)) {
+            Log.e(TAG, "add..request");
+            request.add(this);
+        }
+    }
+
+
+    @Override
+    public CommonNetRequest start() {
+        mObservable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(mObserver);
+        if (mCallback != null)
+            add(mCallback.getRequestList());
+        return this;
     }
 
     Observer<R> mObserver = new Observer<R>() {
@@ -75,7 +95,7 @@ public class CommonOkHttpRequest<R, T> implements CommonNetRequest {
             if (mCallback != null) {
                 boolean isBreak = mCallback.onResult(tBaseBean);
                 if (!isBreak) {
-                    boolean interf=isInterface(tBaseBean.getClass(), BaseData.class.getName());
+                    boolean interf = isInterface(tBaseBean.getClass(), BaseData.class.getName());
                     if (interf) {
                         BaseData<T> baseData = (BaseData<T>) tBaseBean;
                         if (baseData.isSuc()) {

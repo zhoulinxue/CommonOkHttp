@@ -36,14 +36,14 @@ public class OkConfig {
     private CallAdapter.Factory callFactory;
     private boolean isHttps = true;
     private String buildName;
-    private Class builderTag;
+    private String builderTag;
     private Interceptor OkInterceptor;
 
-    public Class getBuilderTag() {
+    public String getBuilderTag() {
         return builderTag;
     }
 
-    public OkConfig setBuilderTag(Class builderTag) {
+    public OkConfig setBuilderTag(String builderTag) {
         this.builderTag = builderTag;
         return this;
     }

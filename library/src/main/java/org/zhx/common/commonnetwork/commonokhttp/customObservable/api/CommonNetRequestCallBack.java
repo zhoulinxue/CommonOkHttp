@@ -1,5 +1,7 @@
 package org.zhx.common.commonnetwork.commonokhttp.customObservable.api;
 
+import java.util.List;
+
 /**
  * Copyright (C),zhx_2018
  * FileName: CommonNetRequestCallBack
@@ -15,5 +17,7 @@ public interface CommonNetRequestCallBack<R,T> {
     public void onError(String responseCode, String msg);
 
     public boolean onResult(R info);
+
+    public List<CommonNetRequest> getRequestList();
 
 }
