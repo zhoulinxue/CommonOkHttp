@@ -80,7 +80,7 @@ public class OkHttpFactory {
                 Log.e(TAG, message);
             }
         });
-        logInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
+        logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         Interceptor interceptor = config.getOkInterceptor() == null ? new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
@@ -98,12 +98,12 @@ public class OkHttpFactory {
             }
         } : config.getOkInterceptor();
         final OkHttpClient.Builder builder = new OkHttpClient.Builder()
-                .addInterceptor(logInterceptor)
                 .connectTimeout(config.getConnectTimeout(), TimeUnit.SECONDS)
                 .writeTimeout(config.getWriteTimeout(), TimeUnit.SECONDS)
                 .readTimeout(config.getReadTimeout(), TimeUnit.SECONDS)
                 .cookieJar(config.getCookieJar())
-                .addInterceptor(interceptor);
+                .addInterceptor(interceptor)
+                .addInterceptor(logInterceptor);
         if (config.isHttps()) {
             builder.sslSocketFactory(config.getSslContext().getSocketFactory(), config.getX509TrustManager())
                     .hostnameVerifier(config.getHostnameVerifier());

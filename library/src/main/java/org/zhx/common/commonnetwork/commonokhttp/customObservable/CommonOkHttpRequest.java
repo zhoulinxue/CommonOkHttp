@@ -11,7 +11,6 @@ import org.zhx.common.commonnetwork.commonokhttp.customObservable.api.CommonNetR
 
 import java.io.InterruptedIOException;
 import java.net.ConnectException;
-import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.text.ParseException;
 import java.util.List;
@@ -123,10 +122,16 @@ public class CommonOkHttpRequest<R, T> implements CommonNetRequest {
                         error = CommonLocalError.ROMOTE_ERROR;
                     } else if (!TextUtils.isEmpty(msg) && msg.contains("HTTP 404")) {
                         error = CommonLocalError.ROMOTE_NOT_FOUND;
+                    } else if (!TextUtils.isEmpty(msg) && msg.contains("HTTP 405")) {
+                        error = CommonLocalError.METHOD_NOT_ALLOW;
+                    } else {
+                        error = CommonLocalError.CONNECT_ERROR;
                     }
                 } else if (e instanceof IllegalArgumentException) {
                     if (!TextUtils.isEmpty(msg) && msg.contains("Malformed URL")) {
                         error = CommonLocalError.URL_NOT_FOUND;
+                    }else {
+                        error = CommonLocalError.ILLEGAL_ARGUMENT;
                     }
                 } else if (e instanceof ConnectException
                         || e instanceof UnknownHostException) {   //   连接错误
@@ -137,7 +142,9 @@ public class CommonOkHttpRequest<R, T> implements CommonNetRequest {
                         || e instanceof NumberFormatException
                         || e instanceof ParseException) {   //  解析错误
                     error = CommonLocalError.PARSE_ERROR;
-                } else {
+                } else if(e instanceof NullPointerException&&msg.contains("Null is not a valid element")){
+                    error = CommonLocalError.NULL_RESPONE;
+                }else {
                     error = CommonLocalError.UNKNOWN_LOCAL_ERROR;
                 }
             } catch (Exception e1) {

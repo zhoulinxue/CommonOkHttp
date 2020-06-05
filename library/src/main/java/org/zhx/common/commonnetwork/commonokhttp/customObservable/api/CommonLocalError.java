@@ -29,10 +29,12 @@ public enum CommonLocalError {
     CONNECT_ERROR(103, "连接错误"),
     CONNECT_TIMEOUT(104, "连接超时"),
     UNKNOWN_LOCAL_ERROR(105, "未知错误"),
-    URL_NOT_FOUND(106, "配置文件异常"),
+    URL_NOT_FOUND(106, "错误的url"),
     ROMOTE_NOT_FOUND(107, "未找到服务"),
-    ROMOTE_ERROR(108,"服务异常");
-
+    ROMOTE_ERROR(108, "服务异常"),
+    METHOD_NOT_ALLOW(109, "方法错误"),
+    ILLEGAL_ARGUMENT(110, "请求格式错误"),
+    NULL_RESPONE(111, "接口返回null");
     private int errorCode;
     private String errorMsg;
 
