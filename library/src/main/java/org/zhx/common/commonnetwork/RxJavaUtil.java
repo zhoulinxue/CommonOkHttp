@@ -105,6 +105,13 @@ public class RxJavaUtil {
     /**
      * 防止重复点击 * * @param target 目标view * @param action 监听器
      */
+    public static void setShakeThings(final View.OnClickListener listener, @NonNull View... target) {
+        setOnClickListeners(listener, 800, target);
+    }
+
+    /**
+     * 防止重复点击 * * @param target 目标view * @param action 监听器
+     */
     public static void setOnClickListeners(final View.OnClickListener listener, int time, @NonNull View... target) {
         for (View view : target) {
             onClick(view).throttleFirst(time, TimeUnit.MILLISECONDS).subscribe(new Observer<View>() {

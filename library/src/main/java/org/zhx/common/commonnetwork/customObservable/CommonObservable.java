@@ -16,6 +16,7 @@ import io.reactivex.Observable;
 public class CommonObservable<T> {
     Observable<T> observable;
     private CommonOkExcutor mExcutor;
+    private CommonNetRequest request;
 
     public Observable<T> getObservable() {
         return observable;
@@ -30,6 +31,15 @@ public class CommonObservable<T> {
         this.mExcutor = new CommonOkExcutor<T>(observable);
     }
 
+    public CommonObservable excute(CommonNetRequestCallBack<?, ?> netRequstAdapter) {
+        if (mExcutor != null) {
+            mExcutor.setNetRequstAdapter(netRequstAdapter);
+            request = mExcutor.excute();
+        }
+        return this;
+    }
+
+    @Deprecated
     public CommonObservable addRequest(List<CommonNetRequest> requests) {
         if (mExcutor != null) {
             mExcutor.setRequests(requests);
@@ -37,10 +47,9 @@ public class CommonObservable<T> {
         return this;
     }
 
-    public void excute(CommonNetRequestCallBack<?, ?> netRequstAdapter) {
-        if (mExcutor != null) {
-            mExcutor.setNetRequstAdapter(netRequstAdapter);
-            mExcutor.excute();
+    public void cancel() {
+        if (request != null) {
+            request.cancel();
         }
     }
 }

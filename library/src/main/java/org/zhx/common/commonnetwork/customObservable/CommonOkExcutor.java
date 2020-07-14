@@ -25,8 +25,9 @@ public class CommonOkExcutor<T> implements CommonExcutable {
     }
 
     @Override
-    public void excute() {
-        new CommonOkHttpRequest<>(observable, netRequstAdapter).start(mRequests);
+    public CommonNetRequest excute() {
+        CommonNetRequest request = new CommonOkHttpRequest<>(observable, netRequstAdapter).start();
+        return request;
     }
 
     public void setRequests(List<CommonNetRequest> mRequests) {

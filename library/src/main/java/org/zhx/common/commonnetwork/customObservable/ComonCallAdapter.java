@@ -30,7 +30,7 @@ public class ComonCallAdapter<R> implements CallAdapter<R, Object> {
     private final boolean isMaybe;
     private final boolean isCompletable;
     Observable<?> observable;
-    CommonObservable<?> kikiObservable;
+    CommonObservable<?> commonObservable;
 
     ComonCallAdapter(Type responseType, @Nullable Scheduler scheduler, boolean isAsync,
                      boolean isResult, boolean isBody, boolean isFlowable, boolean isSingle, boolean isMaybe,
@@ -61,7 +61,7 @@ public class ComonCallAdapter<R> implements CallAdapter<R, Object> {
         } else {
             observable = responseObservable;
         }
-        kikiObservable = new CommonObservable(observable);
+        commonObservable = new CommonObservable(observable);
         if (scheduler != null) {
             observable = observable.subscribeOn(scheduler);
         }
@@ -78,6 +78,6 @@ public class ComonCallAdapter<R> implements CallAdapter<R, Object> {
         if (isCompletable) {
             return observable.ignoreElements();
         }
-        return kikiObservable;
+        return commonObservable;
     }
 }

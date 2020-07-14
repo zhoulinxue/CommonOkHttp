@@ -24,7 +24,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
  * Description:
  */
 public class OkHttpFactory {
-    private OkConfig okConfig;
+    private org.zhx.common.commonnetwork.commonokhttp.OkConfig okConfig;
     private Retrofit.Builder builder;
     private String TAG = OkHttpFactory.class.getSimpleName();
     private Converter.Factory mConvertFactory;
@@ -38,7 +38,7 @@ public class OkHttpFactory {
      *
      * @param builder
      */
-    public void creatBuilderFromCofig(OkConfig builder) {
+    public void creatBuilderFromCofig(org.zhx.common.commonnetwork.commonokhttp.OkConfig builder) {
         this.okConfig = builder;
         if (builder != null) {
             this.builder = creatNewBuilder(builder);
@@ -50,7 +50,7 @@ public class OkHttpFactory {
     /**
      * 初始化 okhttp
      */
-    protected Retrofit.Builder creatNewBuilder(OkConfig builder) {
+    protected Retrofit.Builder creatNewBuilder(org.zhx.common.commonnetwork.commonokhttp.OkConfig builder) {
         Retrofit.Builder defaultBuilder = new Retrofit.Builder();
         OkHttpClient client = builder.getClient() == null ? buildClient(builder) : builder.getClient();
         defaultBuilder.client(client);
@@ -73,7 +73,7 @@ public class OkHttpFactory {
         return defaultBuilder;
     }
 
-    protected OkHttpClient buildClient(final OkConfig config) {
+    protected OkHttpClient buildClient(final org.zhx.common.commonnetwork.commonokhttp.OkConfig config) {
         HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
             public void log(String message) {
@@ -98,12 +98,12 @@ public class OkHttpFactory {
             }
         } : config.getOkInterceptor();
         final OkHttpClient.Builder builder = new OkHttpClient.Builder()
-                .addInterceptor(logInterceptor)
                 .connectTimeout(config.getConnectTimeout(), TimeUnit.SECONDS)
                 .writeTimeout(config.getWriteTimeout(), TimeUnit.SECONDS)
                 .readTimeout(config.getReadTimeout(), TimeUnit.SECONDS)
                 .cookieJar(config.getCookieJar())
-                .addInterceptor(interceptor);
+                .addInterceptor(interceptor)
+                .addInterceptor(logInterceptor);
         if (config.isHttps()) {
             builder.sslSocketFactory(config.getSslContext().getSocketFactory(), config.getX509TrustManager())
                     .hostnameVerifier(config.getHostnameVerifier());
@@ -116,7 +116,7 @@ public class OkHttpFactory {
         return builder;
     }
 
-    public OkConfig getOkConfig() {
+    public org.zhx.common.commonnetwork.commonokhttp.OkConfig getOkConfig() {
         return okConfig;
     }
 }

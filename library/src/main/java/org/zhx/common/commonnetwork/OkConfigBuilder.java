@@ -45,9 +45,9 @@ public class OkConfigBuilder {
     private Converter.Factory converterFactory;
     private CallAdapter.Factory callFactory;
     private boolean isHttps = true;
-    private Class builderTag;
+    private String builderTag;
 
-    public OkConfigBuilder(Class builderTag) {
+    public OkConfigBuilder(String builderTag) {
         this.builderTag = builderTag;
         x509TrustManager = x509();
         hostnameVerifier = hostVerifier();
@@ -55,7 +55,7 @@ public class OkConfigBuilder {
         sslContext();
     }
 
-    public Class getBuilderTag() {
+    public String getBuilderTag() {
         return builderTag;
     }
 
@@ -190,7 +190,7 @@ public class OkConfigBuilder {
         return this;
     }
 
-    public OkConfig build() {
+    public org.zhx.common.commonnetwork.commonokhttp.OkConfig build() {
         OkConfig config = new OkConfig();
         config.setBaseUrl(mBaseUrl);
         config.setContext(context);

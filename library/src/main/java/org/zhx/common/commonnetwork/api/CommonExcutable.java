@@ -8,5 +8,5 @@ package org.zhx.common.commonnetwork.api;
  * Description:
  */
 public interface CommonExcutable {
-    public void excute();
+    public CommonNetRequest excute();
 }

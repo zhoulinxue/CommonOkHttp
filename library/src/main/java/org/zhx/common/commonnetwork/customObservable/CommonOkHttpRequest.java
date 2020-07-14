@@ -52,13 +52,33 @@ public class CommonOkHttpRequest<R, T> implements CommonNetRequest {
     }
 
     @Override
-    public void start(List<CommonNetRequest> requestList) {
+    public CommonNetRequest start(List<CommonNetRequest> requestList) {
         mObservable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mObserver);
         if (requestList != null) {
             requestList.add(this);
         }
+        return this;
+    }
+
+    private void add(List<CommonNetRequest> request) {
+        Log.e(TAG, "add..");
+        if (request != null && !request.contains(this)) {
+            Log.e(TAG, "add..request");
+            request.add(this);
+        }
+    }
+
+
+    @Override
+    public CommonNetRequest start() {
+        mObservable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(mObserver);
+        if (mCallback != null)
+            add(mCallback.getRequestList());
+        return this;
     }
 
     Observer<R> mObserver = new Observer<R>() {
@@ -74,7 +94,7 @@ public class CommonOkHttpRequest<R, T> implements CommonNetRequest {
             if (mCallback != null) {
                 boolean isBreak = mCallback.onResult(tBaseBean);
                 if (!isBreak) {
-                    boolean interf=isInterface(tBaseBean.getClass(), BaseData.class.getName());
+                    boolean interf = isInterface(tBaseBean.getClass(), BaseData.class.getName());
                     if (interf) {
                         BaseData<T> baseData = (BaseData<T>) tBaseBean;
                         if (baseData.isSuc()) {
@@ -102,10 +122,16 @@ public class CommonOkHttpRequest<R, T> implements CommonNetRequest {
                         error = CommonLocalError.ROMOTE_ERROR;
                     } else if (!TextUtils.isEmpty(msg) && msg.contains("HTTP 404")) {
                         error = CommonLocalError.ROMOTE_NOT_FOUND;
+                    } else if (!TextUtils.isEmpty(msg) && msg.contains("HTTP 405")) {
+                        error = CommonLocalError.METHOD_NOT_ALLOW;
+                    } else {
+                        error = CommonLocalError.CONNECT_ERROR;
                     }
                 } else if (e instanceof IllegalArgumentException) {
                     if (!TextUtils.isEmpty(msg) && msg.contains("Malformed URL")) {
                         error = CommonLocalError.URL_NOT_FOUND;
+                    }else {
+                        error = CommonLocalError.ILLEGAL_ARGUMENT;
                     }
                 } else if (e instanceof ConnectException
                         || e instanceof UnknownHostException) {   //   连接错误
@@ -116,7 +142,9 @@ public class CommonOkHttpRequest<R, T> implements CommonNetRequest {
                         || e instanceof NumberFormatException
                         || e instanceof ParseException) {   //  解析错误
                     error = CommonLocalError.PARSE_ERROR;
-                } else {
+                } else if(e instanceof NullPointerException&&msg.contains("Null is not a valid element")){
+                    error = CommonLocalError.NULL_RESPONE;
+                }else {
                     error = CommonLocalError.UNKNOWN_LOCAL_ERROR;
                 }
             } catch (Exception e1) {
