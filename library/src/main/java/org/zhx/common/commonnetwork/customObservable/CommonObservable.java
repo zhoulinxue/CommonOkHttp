@@ -1,7 +1,7 @@
 package org.zhx.common.commonnetwork.customObservable;
 
-import org.zhx.common.commonnetwork.commonokhttp.customObservable.api.CommonNetRequest;
-import org.zhx.common.commonnetwork.commonokhttp.customObservable.api.CommonNetRequestCallBack;
+import org.zhx.common.commonnetwork.api.CommonNetRequest;
+import org.zhx.common.commonnetwork.api.CommonNetRequestCallBack;
 
 import java.util.List;
 

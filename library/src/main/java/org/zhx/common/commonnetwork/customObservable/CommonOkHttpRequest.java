@@ -4,10 +4,10 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import org.json.JSONException;
-import org.zhx.common.commonnetwork.commonokhttp.customObservable.api.BaseData;
-import org.zhx.common.commonnetwork.commonokhttp.customObservable.api.CommonLocalError;
-import org.zhx.common.commonnetwork.commonokhttp.customObservable.api.CommonNetRequest;
-import org.zhx.common.commonnetwork.commonokhttp.customObservable.api.CommonNetRequestCallBack;
+import org.zhx.common.commonnetwork.api.BaseData;
+import org.zhx.common.commonnetwork.api.CommonLocalError;
+import org.zhx.common.commonnetwork.api.CommonNetRequest;
+import org.zhx.common.commonnetwork.api.CommonNetRequestCallBack;
 
 import java.io.InterruptedIOException;
 import java.net.ConnectException;
