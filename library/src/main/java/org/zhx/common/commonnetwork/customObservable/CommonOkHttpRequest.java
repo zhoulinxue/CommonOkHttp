@@ -1,4 +1,4 @@
-package org.zhx.common.commonnetwork.commonokhttp.customObservable;
+package org.zhx.common.commonnetwork.customObservable;
 
 import android.text.TextUtils;
 import android.util.Log;
@@ -11,7 +11,6 @@ import org.zhx.common.commonnetwork.commonokhttp.customObservable.api.CommonNetR
 
 import java.io.InterruptedIOException;
 import java.net.ConnectException;
-import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.text.ParseException;
 import java.util.List;

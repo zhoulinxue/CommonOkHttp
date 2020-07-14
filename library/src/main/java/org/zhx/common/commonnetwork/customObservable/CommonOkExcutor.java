@@ -1,4 +1,4 @@
-package org.zhx.common.commonnetwork.commonokhttp.customObservable;
+package org.zhx.common.commonnetwork.customObservable;
 
 import org.zhx.common.commonnetwork.commonokhttp.customObservable.api.CommonExcutable;
 import org.zhx.common.commonnetwork.commonokhttp.customObservable.api.CommonNetRequest;

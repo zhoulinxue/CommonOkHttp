@@ -1,4 +1,4 @@
-package org.zhx.common.commonnetwork.commonokhttp;
+package org.zhx.common.commonnetwork;
 import java.util.Map;
 
 /**

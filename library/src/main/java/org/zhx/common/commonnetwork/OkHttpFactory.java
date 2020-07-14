@@ -3,10 +3,6 @@ package org.zhx.common.commonnetwork;
 import android.text.TextUtils;
 import android.util.Log;
 
-import org.zhx.common.commonnetwork.commonokhttp.OkConfig;
-import org.zhx.common.commonnetwork.commonokhttp.OkConfigBuilder;
-import org.zhx.common.commonnetwork.commonokhttp.customObservable.CommonCallAdapterFactory;
-
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;

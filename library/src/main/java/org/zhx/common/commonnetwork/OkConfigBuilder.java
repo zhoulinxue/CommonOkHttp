@@ -1,8 +1,6 @@
-package org.zhx.common.commonnetwork.commonokhttp;
+package org.zhx.common.commonnetwork;
 
 import android.content.Context;
-
-import org.zhx.common.commonnetwork.HttpManager;
 
 import java.security.SecureRandom;
 import java.security.cert.CertificateException;
