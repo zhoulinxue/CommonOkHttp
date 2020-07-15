@@ -18,7 +18,7 @@ import retrofit2.Response;
  * creatTime: 2019/7/2
  * description :
  */
-public class ComonCallAdapter<R> implements CallAdapter<R, Object> {
+public class CommonCallAdapter<R> implements CallAdapter<R, Object> {
     private final Type responseType;
     private final @Nullable
     Scheduler scheduler;
@@ -32,9 +32,9 @@ public class ComonCallAdapter<R> implements CallAdapter<R, Object> {
     Observable<?> observable;
     CommonObservable<?> commonObservable;
 
-    ComonCallAdapter(Type responseType, @Nullable Scheduler scheduler, boolean isAsync,
-                     boolean isResult, boolean isBody, boolean isFlowable, boolean isSingle, boolean isMaybe,
-                     boolean isCompletable) {
+    CommonCallAdapter(Type responseType, @Nullable Scheduler scheduler, boolean isAsync,
+                      boolean isResult, boolean isBody, boolean isFlowable, boolean isSingle, boolean isMaybe,
+                      boolean isCompletable) {
         this.responseType = responseType;
         this.scheduler = scheduler;
         this.isAsync = isAsync;

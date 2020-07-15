@@ -9,7 +9,7 @@ import java.util.List;
  * Date: 2018\10\31 0031 17:29
  * Description: ${DESCRIPTION}
  */
-public interface CommonNetRequestCallBack<R,T> {
+public interface CommonNetRequestCallBack<R, T> {
     public void onLoadComplete();
 
     public void onData(T t);
