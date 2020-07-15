@@ -1,3 +1,2 @@
-include ':fastjson_convert'
 include ':app', ':library'
 rootProject.name='CommonOkHttp'
