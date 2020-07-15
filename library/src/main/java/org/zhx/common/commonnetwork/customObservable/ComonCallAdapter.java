@@ -1,4 +1,4 @@
-package org.zhx.common.commonnetwork.commonokhttp.customObservable;
+package org.zhx.common.commonnetwork.customObservable;
 
 import androidx.annotation.Nullable;
 

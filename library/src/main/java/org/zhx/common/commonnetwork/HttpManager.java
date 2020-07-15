@@ -3,9 +3,6 @@ package org.zhx.common.commonnetwork;
 import android.text.TextUtils;
 import android.util.Log;
 
-import org.zhx.common.commonnetwork.commonokhttp.OkConfig;
-import org.zhx.common.commonnetwork.commonokhttp.OkConfigBuilder;
-
 import java.util.HashMap;
 import java.util.Map;
 

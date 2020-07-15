@@ -1,4 +1,4 @@
-package org.zhx.common.commonnetwork.commonokhttp.customObservable;
+package org.zhx.common.commonnetwork.customObservable;
 
 import androidx.annotation.Nullable;
 
@@ -17,7 +17,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.Result;
 
 /**
- * pakage :org.zhx.common.commonnetwork.commonokhttp.customObservable
+ * pakage :org.zhx.common.commonnetwork.customObservable
  * auther :zx
  * creatTime: 2019/7/2
  * description :

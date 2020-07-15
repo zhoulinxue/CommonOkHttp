@@ -1,4 +1,4 @@
-package org.zhx.common.commonnetwork.commonokhttp;
+package org.zhx.common.commonnetwork;
 
 import android.content.Context;
 
@@ -190,7 +190,7 @@ public class OkConfigBuilder {
         return this;
     }
 
-    public org.zhx.common.commonnetwork.commonokhttp.OkConfig build() {
+    public OkConfig build() {
         OkConfig config = new OkConfig();
         config.setBaseUrl(mBaseUrl);
         config.setContext(context);

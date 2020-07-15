@@ -1,4 +1,4 @@
-package org.zhx.common.commonnetwork.commonokhttp.customObservable;
+package org.zhx.common.commonnetwork.customObservable;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;
