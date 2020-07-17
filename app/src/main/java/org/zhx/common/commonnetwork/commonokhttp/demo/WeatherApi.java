@@ -1,6 +1,7 @@
 package org.zhx.common.commonnetwork.commonokhttp.demo;
 
 import org.zhx.common.commonnetwork.commonokhttp.demo.bean.WeatherInfo;
+import org.zhx.common.commonnetwork.customObservable.CommonObservable;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -15,5 +16,9 @@ import retrofit2.http.GET;
 public interface WeatherApi {
     @GET("http://t.weather.sojson.com/api/weather/city/101030100")
     public Observable<WeatherInfo> getTest();
+
+
+    @GET("http://t.weather.sojson.com/api/weather/city/101030100")
+    public CommonObservable<WeatherInfo> getCustomTest();
 
 }

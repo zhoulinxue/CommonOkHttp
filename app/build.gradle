@@ -27,6 +27,6 @@ dependencies {
 
     implementation 'com.squareup.retrofit2:converter-gson:2.0.2'
     //二选一 可以源码  可以 jar包引用
-    implementation project(':library')
-//    implementation 'org.zhx.common:commonOkhttp:1.2.2'
+//    implementation project(':library')
+    implementation 'org.zhx.common:commonOkhttp:1.4.0'
 }
