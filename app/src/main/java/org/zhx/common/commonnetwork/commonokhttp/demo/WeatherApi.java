@@ -14,11 +14,11 @@ import retrofit2.http.GET;
  * Description:
  */
 public interface WeatherApi {
-    @GET("http://t.weather.sojson.com/api/weather/city/101030100")
+    @GET("http://wthrcdn.etouch.cn/weather_mini?citykey=101010100")
     public Observable<WeatherInfo> getTest();
 
 
-    @GET("http://t.weather.sojson.com/api/weather/city/101030100")
+    @GET("http://wthrcdn.etouch.cn/weather_mini?citykey=101010100")
     public CommonObservable<WeatherInfo> getCustomTest();
 
 }
