@@ -33,28 +33,28 @@ public class TestActivity extends AppCompatActivity {
         textView = findViewById(R.id.result_tv);
         HttpManager.getInstance().init(GsonConverterFactory.create());
         //okhttp 原始用法
-//        HttpManager.getInstance().with(WeatherApi.class).getTest().subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<WeatherInfo>() {
-//            @Override
-//            public void onSubscribe(Disposable d) {
-//
-//            }
-//
-//            @Override
-//            public void onNext(WeatherInfo info) {
-//                textView.setText(info.toString());
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//
-//            }
-//
-//            @Override
-//            public void onComplete() {
-//
-//            }
-//        });
+        HttpManager.getInstance().with(WeatherApi.class).getTest().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<WeatherInfo>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(WeatherInfo info) {
+                textView.setText(info.toString());
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
         //封装以后的 用法
         HttpManager.getInstance().with(WeatherApi.class).getCustomTest().excute(new SimpleCommonCallBackAdapter<WeatherInfo>() {
             @Override
