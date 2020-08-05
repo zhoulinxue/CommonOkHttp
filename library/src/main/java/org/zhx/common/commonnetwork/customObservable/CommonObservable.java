@@ -18,31 +18,15 @@ public class CommonObservable<T> {
     private CommonOkExcutor mExcutor;
     private CommonNetRequest request;
 
-    public Observable<T> getObservable() {
-        return observable;
-    }
-
-    public void setObservable(Observable<T> observable) {
-        this.observable = observable;
-    }
-
     public CommonObservable(Observable<T> observable) {
         this.observable = observable;
-        this.mExcutor = new CommonOkExcutor<T>(observable);
+        this.mExcutor = new CommonOkExcutor(observable);
     }
 
     public CommonObservable excute(CommonNetRequestCallBack<?, ?> netRequstAdapter) {
         if (mExcutor != null) {
             mExcutor.setNetRequstAdapter(netRequstAdapter);
             request = mExcutor.excute();
-        }
-        return this;
-    }
-
-    @Deprecated
-    public CommonObservable addRequest(List<CommonNetRequest> requests) {
-        if (mExcutor != null) {
-            mExcutor.setRequests(requests);
         }
         return this;
     }
