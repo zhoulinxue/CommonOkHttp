@@ -149,7 +149,7 @@ static <T> ServiceMethod<T> parseAnnotations(Retrofit retrofit, Method method) {
           } else {
               observable = responseObservable;
           }
-          commonObservable = new CommonObservable(observable);
+         
           if (scheduler != null) {
               observable = observable.subscribeOn(scheduler);
           }
@@ -166,6 +166,6 @@ static <T> ServiceMethod<T> parseAnnotations(Retrofit retrofit, Method method) {
           if (isCompletable) {
               return observable.ignoreElements();
           }
-          return commonObservable;
+          return observable;
       }
   ```
