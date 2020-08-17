@@ -5,6 +5,7 @@ import android.util.Log;
 
 import org.zhx.common.commonnetwork.customObservable.CommonCallAdapterFactory;
 import org.zhx.common.commonnetwork.customObservable.CommonObservable;
+import org.zhx.common.commonnetwork.retrofit.FastJsonConverterFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,7 +44,22 @@ public class HttpManager {
     /**
      * 初始化 client
      */
-    public void init(Converter.Factory convertFactory) {
+    public void init() {
+        init(FastJsonConverterFactory.create(), null);
+    }
+
+    /**
+     * 初始化 client
+     */
+    public void init(HeaderInterceptor interceptor) {
+        init(FastJsonConverterFactory.create(), interceptor);
+    }
+
+
+    /**
+     * 初始化 client
+     */
+    public void init(Converter.Factory convertFactory, HeaderInterceptor interceptor) {
         this.mConvertFactory = convertFactory;
         OkConfig builder = new OkConfigBuilder(DEFAULT_TAG)
                 .setCallFactory(CommonCallAdapterFactory.create())

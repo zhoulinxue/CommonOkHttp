@@ -26,7 +26,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 public class OkHttpFactory {
     private OkConfig okConfig;
     private Retrofit.Builder builder;
-    private String TAG = OkHttpFactory.class.getSimpleName();
+    private String TAG = "CommonOkHttp";
     private Converter.Factory mConvertFactory;
 
     public OkHttpFactory(Converter.Factory mConvertFactory) {
