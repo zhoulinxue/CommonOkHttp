@@ -66,12 +66,6 @@ public class TestActivity extends AppCompatActivity {
             public void onError(String responseCode, String msg) {
 
             }
-
-            @Override
-            public List<CommonNetRequest> getRequestList() {
-                return list;
-            }
-
             @Override
             public void onResultData(WeatherInfo info) {
                 textView.setText(info.toString());
