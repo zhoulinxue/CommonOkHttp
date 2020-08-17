@@ -4,12 +4,14 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import org.zhx.common.commonnetwork.customObservable.CommonCallAdapterFactory;
+import org.zhx.common.commonnetwork.customObservable.CommonObservable;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import retrofit2.Converter;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 /**
  * Copyright (C), 2015-2020

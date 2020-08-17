@@ -15,10 +15,11 @@ import retrofit2.adapter.rxjava2.Result;
  * creatTime: 2019/7/2
  * description :
  */
-public class CommonResultObservable<T> extends Observable<Result<T>> {
+public class CommonResultObservable<T> extends CommonObservable<Result<T>> {
     private final Observable<Response<T>> upstream;
 
     CommonResultObservable(Observable<Response<T>> upstream) {
+        super();
         this.upstream = upstream;
     }
 

@@ -3,24 +3,26 @@ package org.zhx.common.commonnetwork.customObservable;
 import org.zhx.common.commonnetwork.api.CommonNetRequest;
 import org.zhx.common.commonnetwork.api.CommonNetRequestCallBack;
 
-import java.util.List;
-
 import io.reactivex.Observable;
 
 /**
- * pakage :org.zhx.common.commonnetwork.commonokhttp.customObservable
- * auther :zx
- * creatTime: 2019/7/3
- * description :
+ * @ProjectName: CommonOkHttp
+ * @Package: org.zhx.common.commonnetwork.customObservable
+ * @ClassName: CustomObservable
+ * @Description:java类作用描述
+ * @Author: zhouxue
+ * @CreateDate: 2020/8/17 11:35
+ * @UpdateUser: 更新者
+ * @UpdateDate: 2020/8/17 11:35
+ * @UpdateRemark: 更新说明
+ * @Version:1.0
  */
-public class CommonObservable<T> {
-    Observable<T> observable;
+public abstract class CommonObservable<T> extends Observable<T> {
     private CommonOkExcutor mExcutor;
     private CommonNetRequest request;
 
-    public CommonObservable(Observable<T> observable) {
-        this.observable = observable;
-        this.mExcutor = new CommonOkExcutor(observable);
+    public CommonObservable() {
+        this.mExcutor = new CommonOkExcutor(this);
     }
 
     public CommonObservable excute(CommonNetRequestCallBack<?, ?> netRequstAdapter) {

@@ -15,10 +15,11 @@ import retrofit2.adapter.rxjava2.HttpException;
  * creatTime: 2019/7/2
  * description :
  */
-public class CommonBodyObservable<T> extends Observable<T> {
+public class CommonBodyObservable<T> extends CommonObservable<T> {
     private final Observable<Response<T>> upstream;
 
     CommonBodyObservable(Observable<Response<T>> upstream) {
+        super();
         this.upstream = upstream;
     }
 

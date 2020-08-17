@@ -9,6 +9,7 @@ import java.lang.reflect.Type;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
 import io.reactivex.Maybe;
+import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import retrofit2.CallAdapter;
@@ -52,7 +53,7 @@ public class CommonCallAdapterFactory extends CallAdapter.Factory {
         boolean isFlowable = rawType == Flowable.class;
         boolean isSingle = rawType == Single.class;
         boolean isMaybe = rawType == Maybe.class;
-        if (rawType != CommonObservable.class && !isFlowable && !isSingle && !isMaybe) {
+        if ((rawType!=CommonObservable.class&&rawType != Observable.class)&& !isFlowable && !isSingle && !isMaybe) {
             return null;
         }
 

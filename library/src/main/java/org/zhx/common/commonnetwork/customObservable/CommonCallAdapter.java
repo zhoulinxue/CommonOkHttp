@@ -30,7 +30,6 @@ public class CommonCallAdapter<R> implements CallAdapter<R, Object> {
     private final boolean isMaybe;
     private final boolean isCompletable;
     Observable<?> observable;
-    CommonObservable<?> commonObservable;
 
     CommonCallAdapter(Type responseType, @Nullable Scheduler scheduler, boolean isAsync,
                       boolean isResult, boolean isBody, boolean isFlowable, boolean isSingle, boolean isMaybe,
@@ -61,7 +60,6 @@ public class CommonCallAdapter<R> implements CallAdapter<R, Object> {
         } else {
             observable = responseObservable;
         }
-        commonObservable = new CommonObservable(observable);
         if (scheduler != null) {
             observable = observable.subscribeOn(scheduler);
         }
@@ -78,6 +76,6 @@ public class CommonCallAdapter<R> implements CallAdapter<R, Object> {
         if (isCompletable) {
             return observable.ignoreElements();
         }
-        return commonObservable;
+        return observable;
     }
 }

@@ -1,6 +1,5 @@
 package org.zhx.common.commonnetwork.customObservable;
 
-import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.exceptions.CompositeException;
@@ -15,10 +14,11 @@ import retrofit2.Response;
  * creatTime: 2019/7/2
  * description :
  */
-public class CommonCallExecuteObservable<T> extends Observable<Response<T>> {
+public class CommonCallExecuteObservable<T> extends CommonObservable<Response<T>> {
     private final Call<T> originalCall;
 
     CommonCallExecuteObservable(Call<T> originalCall) {
+        super();
         this.originalCall = originalCall;
     }
 

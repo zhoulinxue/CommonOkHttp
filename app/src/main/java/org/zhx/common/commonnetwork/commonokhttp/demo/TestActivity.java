@@ -56,21 +56,21 @@ public class TestActivity extends AppCompatActivity {
             }
         });
         //封装以后的 用法
-        HttpManager.getInstance().with(WeatherApi.class).getCustomTest().excute(new SimpleCommonCallBackAdapter<WeatherInfo>() {
-            @Override
-            public void onLoadComplete() {
-
-            }
-
-            @Override
-            public void onError(String responseCode, String msg) {
-
-            }
-            @Override
-            public void onResultData(WeatherInfo info) {
-                textView.setText(info.toString());
-            }
-        });
+//        HttpManager.getInstance().with(WeatherApi.class).getCustomTest().excute(new SimpleCommonCallBackAdapter<WeatherInfo>() {
+//            @Override
+//            public void onLoadComplete() {
+//
+//            }
+//
+//            @Override
+//            public void onError(String responseCode, String msg) {
+//
+//            }
+//            @Override
+//            public void onResultData(WeatherInfo info) {
+//                textView.setText(info.toString());
+//            }
+//        });
     }
 
     @Override
