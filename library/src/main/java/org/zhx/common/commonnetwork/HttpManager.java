@@ -55,6 +55,12 @@ public class HttpManager {
         init(FastJsonConverterFactory.create(), interceptor);
     }
 
+    /**
+     * 初始化 client
+     */
+    public void init(Converter.Factory convertFactory) {
+        init(convertFactory, null);
+    }
 
     /**
      * 初始化 client
@@ -65,6 +71,7 @@ public class HttpManager {
                 .setCallFactory(CommonCallAdapterFactory.create())
                 .setConverterFactory(convertFactory)
                 .setHttps(true)
+                .setInterceptor(interceptor)
                 .build();
         initFactoryByTag(builder);
     }
