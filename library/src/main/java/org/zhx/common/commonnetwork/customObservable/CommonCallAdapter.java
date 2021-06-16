@@ -1,7 +1,5 @@
 package org.zhx.common.commonnetwork.customObservable;
 
-import androidx.annotation.Nullable;
-
 import java.lang.reflect.Type;
 
 import io.reactivex.BackpressureStrategy;
@@ -20,8 +18,7 @@ import retrofit2.Response;
  */
 public class CommonCallAdapter<R> implements CallAdapter<R, Object> {
     private final Type responseType;
-    private final @Nullable
-    Scheduler scheduler;
+    private final Scheduler scheduler;
     private final boolean isAsync;
     private final boolean isResult;
     private final boolean isBody;
@@ -31,7 +28,7 @@ public class CommonCallAdapter<R> implements CallAdapter<R, Object> {
     private final boolean isCompletable;
     Observable<?> observable;
 
-    CommonCallAdapter(Type responseType, @Nullable Scheduler scheduler, boolean isAsync,
+    CommonCallAdapter(Type responseType, Scheduler scheduler, boolean isAsync,
                       boolean isResult, boolean isBody, boolean isFlowable, boolean isSingle, boolean isMaybe,
                       boolean isCompletable) {
         this.responseType = responseType;
