@@ -31,7 +31,7 @@ ext {
     android = [
             compileSdkVersion: 27,
             targetSdkVersion : 27,
-            minSdkVersion    : 19
+            minSdkVersion    : 16
     ]
     okhttp3 = "com.squareup.okhttp3:okhttp:3.12.0"
     okhttpLog = "com.squareup.okhttp3:logging-interceptor:3.8.1"

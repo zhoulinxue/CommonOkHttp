@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "org.zhx.common.commonnetwork.commonokhttp.demo"
-        minSdkVersion 19
+        minSdkVersion 16
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -28,7 +28,7 @@ dependencies {
 
     implementation 'com.squareup.retrofit2:converter-gson:2.0.2'
     //二选一 可以源码  可以 jar包引用
-//    implementation project(':library')
+    implementation project(':library')
 //    implementation 'org.zhx.common:commonOkhttp:1.4.0'
-    implementation 'com.github.zhoulinxue:CommonOkHttp:1.0.1'
+//    implementation 'com.github.zhoulinxue:CommonOkHttp:1.0.1'
 }

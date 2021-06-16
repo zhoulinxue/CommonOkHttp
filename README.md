@@ -1,7 +1,7 @@
 # CommonOkHttp
 
  ```
-   implementation 'com.github.zhoulinxue:CommonOkHttp:1.0.1'
+   implementation 'com.github.zhoulinxue:CommonOkHttp:1.0.2'
  ```
 
 ### Retrofit 是如何 创建 一个http 请求的？
