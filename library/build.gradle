@@ -1,14 +1,5 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
-publish {
-    repoName = 'common'//远程仓库名字,不指明，默认是上传到maven
-    userOrg = 'zhx'//bintray.com用户名
-    groupId = 'org.zhx.common'//jcenter上的路径,bintray上创建Package时填写的Version control项
-    artifactId = 'commonOkhttp'//项目名称，bintray上创建Package时填写的Name项
-    publishVersion = '1.4.2'//版本号
-    desc = 'easy okhttp'//描述，不重要
-    website = 'https://github.com/zhoulinxue/CommonOkHttp.git'//网站，最好有，不重要
-}
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -39,12 +30,9 @@ dependencies {
     api rootProject.ext.rxjava
     api rootProject.ext.retrofitAdapter
     api rootProject.ext.rxAndroid
-    api rootProject.ext.appCompat
     //------------------------------
     api 'com.alibaba:fastjson:1.1.71.android'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }
 tasks.withType(Javadoc) {
     options.addStringOption("Xdoclint:none", "-quiet")

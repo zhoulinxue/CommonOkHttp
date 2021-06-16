@@ -24,7 +24,7 @@ public class CommonBodyObservable<T> extends CommonObservable<T> {
     }
 
     @Override protected void subscribeActual(Observer<? super T> observer) {
-        upstream.subscribe(new CommonBodyObservable.BodyObserver<T>(observer));
+        upstream.subscribe(new BodyObserver<T>(observer));
     }
 
     private static class BodyObserver<R> implements Observer<Response<R>> {

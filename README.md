@@ -1,4 +1,9 @@
 # CommonOkHttp
+
+ ```
+   implementation 'com.github.zhoulinxue:CommonOkHttp:1.0.1'
+ ```
+
 ### Retrofit 是如何 创建 一个http 请求的？
 ##第一步:创建 Retrofit.Builder
 ```

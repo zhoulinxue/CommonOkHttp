@@ -25,7 +25,7 @@ public class CommonResultObservable<T> extends CommonObservable<Result<T>> {
 
     @Override
     protected void subscribeActual(Observer<? super Result<T>> observer) {
-        upstream.subscribe(new CommonResultObservable.ResultObserver<T>(observer));
+        upstream.subscribe(new ResultObserver<T>(observer));
     }
 
     private static class ResultObserver<R> implements Observer<Response<R>> {

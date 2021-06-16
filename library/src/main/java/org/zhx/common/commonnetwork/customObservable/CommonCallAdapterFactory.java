@@ -1,7 +1,5 @@
 package org.zhx.common.commonnetwork.customObservable;
 
-import androidx.annotation.Nullable;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -32,10 +30,10 @@ public class CommonCallAdapterFactory extends CallAdapter.Factory {
     public static CommonCallAdapterFactory create() {
         return new CommonCallAdapterFactory(null);
     }
-    private final @Nullable
+    private final
     Scheduler scheduler;
 
-    private CommonCallAdapterFactory(@Nullable Scheduler scheduler) {
+    private CommonCallAdapterFactory(Scheduler scheduler) {
         this.scheduler = scheduler;
     }
 

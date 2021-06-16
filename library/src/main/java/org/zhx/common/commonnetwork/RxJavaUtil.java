@@ -2,8 +2,6 @@ package org.zhx.common.commonnetwork;
 
 import android.view.View;
 
-import androidx.annotation.NonNull;
-
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -98,21 +96,21 @@ public class RxJavaUtil {
     /**
      * 防止重复点击 * * @param target 目标view * @param action 监听器
      */
-    public static void setOnClickListeners(final View.OnClickListener listener, @NonNull View... target) {
+    public static void setOnClickListeners(final View.OnClickListener listener,  View... target) {
             setOnClickListeners(listener, 800, target);
     }
 
     /**
      * 防止重复点击 * * @param target 目标view * @param action 监听器
      */
-    public static void setShakeThings(final View.OnClickListener listener, @NonNull View... target) {
+    public static void setShakeThings(final View.OnClickListener listener,  View... target) {
         setOnClickListeners(listener, 800, target);
     }
 
     /**
      * 防止重复点击 * * @param target 目标view * @param action 监听器
      */
-    public static void setOnClickListeners(final View.OnClickListener listener, int time, @NonNull View... target) {
+    public static void setOnClickListeners(final View.OnClickListener listener, int time,  View... target) {
         for (View view : target) {
             onClick(view).throttleFirst(time, TimeUnit.MILLISECONDS).subscribe(new Observer<View>() {
                 @Override
@@ -141,8 +139,7 @@ public class RxJavaUtil {
     /**
      * 监听onclick事件防抖动 * * @param view * @return
      */
-    @NonNull
-    private static Observable<View> onClick(@NonNull View view) {
+    private static Observable<View> onClick( View view) {
         checkNoNull(view);
         return Observable.create(new ViewClickOnSubscribe(view));
     }
