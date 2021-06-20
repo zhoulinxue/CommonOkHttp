@@ -9,7 +9,7 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 /**
- * pakage :org.zhx.common.commonnetwork.commonokhttp.customObservable
+ * pakage :org.zhx.common.commonnetwork.customObservable
  * auther :zx
  * creatTime: 2019/7/2
  * description :

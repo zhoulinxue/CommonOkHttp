@@ -30,8 +30,7 @@ public class CommonCallAdapterFactory extends CallAdapter.Factory {
     public static CommonCallAdapterFactory create() {
         return new CommonCallAdapterFactory(null);
     }
-    private final
-    Scheduler scheduler;
+    private final Scheduler scheduler;
 
     private CommonCallAdapterFactory(Scheduler scheduler) {
         this.scheduler = scheduler;

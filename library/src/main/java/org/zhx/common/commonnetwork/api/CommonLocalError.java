@@ -16,6 +16,7 @@ public enum CommonLocalError {
     URL_NOT_FOUND(106, "错误的url"),
     ROMOTE_NOT_FOUND(107, "未找到服务"),
     ROMOTE_ERROR(108, "服务异常"),
+    ROMOTE_DATA_ERROR(112, "返回数据结构错"),
     METHOD_NOT_ALLOW(109, "方法错误"),
     ILLEGAL_ARGUMENT(110, "请求格式错误"),
     NULL_RESPONE(111, "接口返回null");

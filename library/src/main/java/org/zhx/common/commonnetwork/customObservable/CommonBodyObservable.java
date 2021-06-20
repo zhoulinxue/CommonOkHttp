@@ -10,7 +10,7 @@ import retrofit2.Response;
 import retrofit2.adapter.rxjava2.HttpException;
 
 /**
- * pakage :org.zhx.common.commonnetwork.commonokhttp.customObservable
+ * pakage :org.zhx.common.commonnetwork.customObservable
  * auther :zx
  * creatTime: 2019/7/2
  * description :
@@ -24,7 +24,7 @@ public class CommonBodyObservable<T> extends CommonObservable<T> {
     }
 
     @Override protected void subscribeActual(Observer<? super T> observer) {
-        upstream.subscribe(new BodyObserver<T>(observer));
+        upstream.subscribe(new CommonBodyObservable.BodyObserver<T>(observer));
     }
 
     private static class BodyObserver<R> implements Observer<Response<R>> {

@@ -10,7 +10,7 @@ import retrofit2.Response;
 import retrofit2.adapter.rxjava2.Result;
 
 /**
- * pakage :org.zhx.common.commonnetwork.commonokhttp.customObservable
+ * pakage :org.zhx.common.commonnetwork.customObservable
  * auther :zx
  * creatTime: 2019/7/2
  * description :
@@ -25,7 +25,7 @@ public class CommonResultObservable<T> extends CommonObservable<Result<T>> {
 
     @Override
     protected void subscribeActual(Observer<? super Result<T>> observer) {
-        upstream.subscribe(new ResultObserver<T>(observer));
+        upstream.subscribe(new CommonResultObservable.ResultObserver<T>(observer));
     }
 
     private static class ResultObserver<R> implements Observer<Response<R>> {

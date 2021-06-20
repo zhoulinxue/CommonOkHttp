@@ -11,7 +11,7 @@ import retrofit2.Response;
 
 
 /**
- * pakage :org.zhx.common.commonnetwork.commonokhttp.customObservable
+ * pakage :org.zhx.common.commonnetwork.customObservable
  * auther :zx
  * creatTime: 2019/7/2
  * description :
@@ -28,7 +28,7 @@ public class CommonCallAdapter<R> implements CallAdapter<R, Object> {
     private final boolean isCompletable;
     Observable<?> observable;
 
-    CommonCallAdapter(Type responseType, Scheduler scheduler, boolean isAsync,
+    CommonCallAdapter(Type responseType,  Scheduler scheduler, boolean isAsync,
                       boolean isResult, boolean isBody, boolean isFlowable, boolean isSingle, boolean isMaybe,
                       boolean isCompletable) {
         this.responseType = responseType;

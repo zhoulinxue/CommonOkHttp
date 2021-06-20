@@ -102,6 +102,8 @@ public class CommonOkHttpRequest<R, T> implements CommonNetRequest {
                         } else {
                             mCallback.onError(baseData.responeCode(), baseData.message());
                         }
+                    } else {
+                        mCallback.onError(CommonLocalError.ROMOTE_DATA_ERROR.getErrorCode() + "", CommonLocalError.ROMOTE_DATA_ERROR.getErrorMsg());
                     }
                 }
             }
@@ -130,7 +132,7 @@ public class CommonOkHttpRequest<R, T> implements CommonNetRequest {
                 } else if (e instanceof IllegalArgumentException) {
                     if (!TextUtils.isEmpty(msg) && msg.contains("Malformed URL")) {
                         error = CommonLocalError.URL_NOT_FOUND;
-                    }else {
+                    } else {
                         error = CommonLocalError.ILLEGAL_ARGUMENT;
                     }
                 } else if (e instanceof ConnectException
@@ -142,9 +144,9 @@ public class CommonOkHttpRequest<R, T> implements CommonNetRequest {
                         || e instanceof NumberFormatException
                         || e instanceof ParseException) {   //  解析错误
                     error = CommonLocalError.PARSE_ERROR;
-                } else if(e instanceof NullPointerException&&msg.contains("Null is not a valid element")){
+                } else if (e instanceof NullPointerException && msg.contains("Null is not a valid element")) {
                     error = CommonLocalError.NULL_RESPONE;
-                }else {
+                } else {
                     error = CommonLocalError.UNKNOWN_LOCAL_ERROR;
                 }
             } catch (Exception e1) {

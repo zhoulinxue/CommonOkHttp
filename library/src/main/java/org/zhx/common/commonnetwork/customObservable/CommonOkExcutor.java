@@ -3,6 +3,7 @@ package org.zhx.common.commonnetwork.customObservable;
 import org.zhx.common.commonnetwork.api.CommonExcutable;
 import org.zhx.common.commonnetwork.api.CommonNetRequest;
 import org.zhx.common.commonnetwork.api.CommonNetRequestCallBack;
+
 import io.reactivex.Observable;
 
 /**
